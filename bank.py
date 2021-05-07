@@ -1,4 +1,6 @@
 import mysql.connector as sqltor
+from nsetools import Nse
+nse = Nse()
 sqlcon = sqltor.connect(host='localhost',user='root',password='tiger')
 cursor = sqlcon.cursor()
 cursor.execute("create database if not exists tradebot;")
@@ -27,6 +29,27 @@ class Account:
         gain(-amount)
     def recieve(amount):
         gain(amount)
+
+class DematAccount(Account):
+    def __init__(self, user, balance):
+        super().__init__(user, balance)
+        cursor.execute("create table if not exists DematAccount (user varchar(200) foreign key references Account(user), stockowned char(50) primary key, buyingprice float, qty int;")
+    def networth():
+        cursor.execute("select stockowned, qty from DematAccount where user='"+str(self.user)+"';")
+        data = cursor.fetchall()
+        worth = 0
+        for i in data:
+            curprice = nse.get_quote(i[0])['lastPrice']
+            worth += i[1]*curprice
+        return worth
+    def buystock(stock_code,quantity):
+        curprice = nse.get_quote(stock_code)['lastPrice']
+        self.pay(curprice*quantity)
+        operation = ""
+        cursor.execute(operation)
+
+        
+
 
 parthacc = Account("Parth Gupte",10000)
 print(parthacc.balance)
