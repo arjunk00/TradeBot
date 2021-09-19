@@ -1,5 +1,6 @@
 from nsetools import Nse
 from threading import *
+import math
 nse = Nse()
 def fakelivealert(stock_code,alert_price):
     alert_price = 55
@@ -36,6 +37,15 @@ class Eyeofmehta(Thread):
 
     def run(self):
         fakelivealert(self.stock_code, self.alert_price)
+
+
+    
+
+
+
+
+
+
 
 stockalertdict = {'infy':55,'poty':23,'hemlo':77}
 for key, val in stockalertdict.items():
