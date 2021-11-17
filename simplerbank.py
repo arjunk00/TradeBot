@@ -10,7 +10,8 @@ class Demataccount:
 
     def buy(self,stock_code,**kwargs):
         max = kwargs['max']
-        curprice = nse.get_quote(stock_code)['lastPrice']
+        curprice = float(nse.get_quote(stock_code)['lastPrice'])
+        self.assets.last_buyprice = curprice
         maxbuy = math.floor(self.balance/curprice)
         if max:
             buy_qty = maxbuy
@@ -29,7 +30,7 @@ class Demataccount:
     
     def sell(self,stock_code,**kwargs):
         max = kwargs['max']
-        curprice = nse.get_quote(stock_code)['lastPrice']
+        curprice = float(nse.get_quote(stock_code)['lastPrice'])
         if max:
             sell_qty = self.assets.qty_owned
             self.assets.qty_owned -= sell_qty
@@ -45,11 +46,19 @@ class Demataccount:
     def networth(self):
         stock_code = self.assets.stock_code
         qty_owned = self.assets.qty_owned
-        curprice = nse.get_quote(stock_code)['lastPrice']
+        curprice = float(nse.get_quote(stock_code)['lastPrice'])
         return curprice*qty_owned
+    
+    def percentchange(self):
+        stock_code = self.assets.stock_code
+        lastprice = self.assets.last_buyprice
+        curprice = float(nse.get_quote(stock_code)['lastPrice'])
+        return (curprice-lastprice)*100/lastprice
+
         
     class Assets:
         def __init__(self):
             self.stock_code = ''
             self.qty_owned = 0
+            self.last_buyprice = 0
         
