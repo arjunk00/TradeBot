@@ -13,12 +13,12 @@ def fallbuy(stock_code):
     fallperc = (prevavg-covavg)*100/prevavg
     q = nse.get_quote(stock_code)['lastPrice']
     if q < prevavg:
-        return (True,expectedreturn,fallperc,prevavg,covavg,prevavg-covavg)
+        return (stock_code,True,expectedreturn,fallperc,prevavg,covavg,prevavg-covavg)
     else:
-        return (False,expectedreturn,fallperc,prevavg,covavg,prevavg-covavg)
+        return (stock_code,False,expectedreturn,fallperc,prevavg,covavg,prevavg-covavg)
 
-print(fallbuy('INFY'))
-"""
+
+
 with open('Screener_Results.csv') as csvfile:
     spamreader = csv.reader(csvfile, dialect='excel')
     n = 0
@@ -27,8 +27,10 @@ with open('Screener_Results.csv') as csvfile:
             n+=1
             continue
         else:
-            print(row)
-            print(fallbuy(row[1]))
+            try:
+                print(fallbuy(row[1]))
+            except:
+                continue
 
 
-"""
+
