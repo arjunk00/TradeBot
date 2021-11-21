@@ -19,7 +19,7 @@ def fallbuy(stock_code):
 
 
 
-with open('Screener_Results.csv') as csvfile:
+with open('Equity.csv') as csvfile:
     spamreader = csv.reader(csvfile, dialect='excel')
     n = 0
     for row in spamreader:
@@ -28,7 +28,7 @@ with open('Screener_Results.csv') as csvfile:
             continue
         else:
             try:
-                print(fallbuy(row[1]))
+                print(fallbuy(row[0]))
             except:
                 continue
 
