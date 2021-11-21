@@ -28,7 +28,8 @@ with open('Equity.csv') as csvfile:
             continue
         else:
             try:
-                print(fallbuy(row[0]))
+                if fallbuy(row[0])[1]:
+                    print(fallbuy(row[0]))
             except:
                 continue
 
