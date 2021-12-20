@@ -22,5 +22,5 @@ def fallbuy(stock_code):
 
 def yearlyreturn(profit_percent,time):
     t = time.total_seconds()
-    k = datetime.timedelta(365)
-    return (1+(profit_percent/100))**(k/t)
+    k = datetime.timedelta(365).total_seconds()
+    return (((1+(profit_percent/100))**(k/t))-1)*100
