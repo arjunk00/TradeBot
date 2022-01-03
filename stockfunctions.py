@@ -1,7 +1,6 @@
 from nsetools import Nse
 from nsepy import get_history
 from datetime import date
-import simplerbank as sbi
 import csv
 import math
 import datetime

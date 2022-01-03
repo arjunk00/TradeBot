@@ -1,10 +1,15 @@
-from stockfunctions import *
+from stockfunctions import marubozu
+import csv
+import datetime
 M = 0
+print(marubozu("PARAS", datetime.date(2021, 10, 12)))
+
+
 with open('Equity.csv') as csvfile:
     spamreader = csv.reader(csvfile, dialect='excel')
     first = True
-    day = datetime.date(2021,12,1)
-    while day<=datetime.date(2021,12,30):
+    day = datetime.date(2021,10,1)
+    while day<=datetime.date(2021,10,29):
         for row in spamreader:
             if first:
                 first = False
@@ -16,3 +21,5 @@ with open('Equity.csv') as csvfile:
                     M += 1
                     print(maru)
         day+=datetime.timedelta(1)
+
+
