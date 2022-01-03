@@ -5,6 +5,7 @@ import simplerbank as sbi
 import csv
 import math
 import datetime
+import pandas as pd
 nse = Nse()
 
 def fallbuy(stock_code):
@@ -24,3 +25,28 @@ def yearlyreturn(profit_percent,time):
     t = time.total_seconds()
     k = datetime.timedelta(365).total_seconds()
     return (((1+(profit_percent/100))**(k/t))-1)*100
+
+def marubozu(stock_code,day):
+    data = get_history(symbol=stock_code,start=day,end=day)
+    # print(data)
+    open, close, high, low = data['Open'].values, data['Close'].values, data['High'].values, data['Low'].values
+    # print(open)
+    if open.size == 0:
+        return {'stock_code':stock_code,'date':day,'trading_day':False,'marubozu':None,'bull':None}
+    else:
+        open, close, high, low = data['Open'].values[0], data['Close'].values[0], data['High'].values[0], data['Low'].values[0]
+        if open==low and close==high:
+            return {'stock_code':stock_code,'date':day,'trading_day':True,'marubozu':True,'bull':True} 
+        elif open==high and close==low:
+            return {'stock_code':stock_code,'date':day,'trading_day':True,'marubozu':True,'bull':False}
+        else:
+            return {'stock_code':stock_code,'date':day,'trading_day':True,'marubozu':False,'bull':None}
+
+   
+# print(yearlyreturn(15,datetime.timedelta(days=90)))
+
+# day = datetime.date(2021,12,30)
+# print(marubozu('infy',day))
+# print(M)
+# data = get_history(symbol='infy',start=day,end=day)
+# # print(data)
