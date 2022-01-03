@@ -3,8 +3,8 @@ M = 0
 with open('Equity.csv') as csvfile:
     spamreader = csv.reader(csvfile, dialect='excel')
     first = True
-    day = datetime.date(2021,12,1)
-    while day<=datetime.date(2021,12,30):
+    day = datetime.date(2021,10,1)
+    while day<=datetime.date(2021,10,30):
         for row in spamreader:
             if first:
                 first = False
