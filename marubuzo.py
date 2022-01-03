@@ -9,7 +9,11 @@ with open('Equity.csv') as csvfile:
     spamreader = csv.reader(csvfile, dialect='excel')
     first = True
     day = datetime.date(2021,10,1)
+<<<<<<< HEAD
     while day<=datetime.date(2021,10,29):
+=======
+    while day<=datetime.date(2021,10,30):
+>>>>>>> b852c00746b3a0ed663a99d7e5a7592f88eb2d5a
         for row in spamreader:
             if first:
                 first = False
