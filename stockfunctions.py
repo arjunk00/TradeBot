@@ -5,6 +5,7 @@ import csv
 import math
 import datetime
 import pandas as pd
+import psycopg2
 nse = Nse()
 
 def fallbuy(stock_code):
@@ -40,6 +41,17 @@ def marubozu(stock_code,day):
             return {'stock_code':stock_code,'date':day,'trading_day':True,'marubozu':True,'bull':False}
         else:
             return {'stock_code':stock_code,'date':day,'trading_day':True,'marubozu':False,'bull':None}
+
+
+def stock_code_to_token(tradingsymbol):
+    ts=tradingsymbol
+    conn=psycopg2.connect(database="marubozu_data", user="arjun", password="1234", host="127.0.0.1", port="5432")
+    cur=conn.cursor()
+    fetch_token = "SELECT instrument_token,exchange_token from nse_tokens WHERE tradingsymbol='{}';".format(ts)
+    cur.execute(fetch_token)
+    tokens=cur.fetchall()[0]
+    conn.close()
+    return tokens
 
    
 # print(yearlyreturn(15,datetime.timedelta(days=90)))

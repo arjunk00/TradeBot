@@ -6,7 +6,7 @@ import time
 logging.basicConfig(level=logging.DEBUG)
 api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
 api_key = "t44a8jbiydzpqq8b"
-access_token = "qUhbnHQph0kIfPzQJ4jQjrAS64737em3"
+access_token = "UqgUJ1LCgcDN7kPnAaS3Q2ZfkWjcN1dd"
 kws = KiteTicker(api_key, access_token)
 
 tokens = [408065, 73856, 256265, 265]
@@ -19,9 +19,9 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    ws.subscribe([408065, 1594])
+    ws.subscribe([3677697, 14366])
 
-    ws.set_mode(ws.MODE_FULL, [408065])
+    ws.set_mode(ws.MODE_FULL, [3677697])
 
 
 def on_close(ws, code, reason):
@@ -45,4 +45,4 @@ kws.connect()
 #         else:
 #             logging.info("Connecting to WebSocket...")
 #
-#     time.sleep(5)
+#     time.sleep(2)
