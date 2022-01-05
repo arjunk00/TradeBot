@@ -19,14 +19,14 @@ def on_ticks(ws, ticks):
     print(ticks)
 
 
-def on_connect(ws, response,stock_code):
-    ws.subscribe(list(stock_code_to_token(stock_code)))
+def on_connect(self,stock_code):
+    self.subscribe(list(stock_code_to_token(stock_code)))
 
-    ws.set_mode(ws.MODE_FULL, [stock_code_to_token(stock_code)[0]])
+    self.set_mode(self.MODE_FULL, [stock_code_to_token(stock_code)[0]])
 
 
-def on_close(ws, code, reason):
-    ws.stop()
+def on_close(self, code, reason):
+    self.stop()
 
 
 kws.on_ticks = on_ticks
