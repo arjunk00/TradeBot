@@ -58,8 +58,9 @@ def token_to_stock_code(token):
     cur=conn.cursor()
     fetch_token = "SELECT tradingsymbol from nse_tokens WHERE instrument_token='{}';".format(str(token))
     cur.execute(fetch_token)
-    tokens=cur.fetchall()[0]
+    stock_codes=cur.fetchall()[0]
     conn.close()
+    return stock_codes[0]
 
 
    
