@@ -27,7 +27,7 @@ def on_connect(ws, response):
         n=0
         for row in csvreader:
             n+=1
-            if n>100:
+            if n>50:
                 break
             nifty200_token_list.append(stock_code_to_token(row[2]))
 
