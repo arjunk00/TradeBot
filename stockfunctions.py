@@ -47,11 +47,21 @@ def stock_code_to_token(tradingsymbol):
     ts=tradingsymbol
     conn=psycopg2.connect(database="marubozu_data", user="arjun", password="1234", host="127.0.0.1", port="5432")
     cur=conn.cursor()
-    fetch_token = "SELECT instrument_token,exchange_token from nse_tokens WHERE tradingsymbol='{}';".format(ts)
+    fetch_token = "SELECT instrument_token from nse_tokens WHERE tradingsymbol='{}';".format(ts)
     cur.execute(fetch_token)
     tokens=cur.fetchall()[0]
     conn.close()
-    return tokens
+    return tokens[0]
+
+def token_to_stock_code(token):
+    conn=psycopg2.connect(database="marubozu_data", user="arjun", password="1234", host="127.0.0.1", port="5432")
+    cur=conn.cursor()
+    fetch_token = "SELECT tradingsymbol from nse_tokens WHERE instrument_token='{}';".format(str(token))
+    cur.execute(fetch_token)
+    stock_codes=cur.fetchall()[0]
+    conn.close()
+    return stock_codes[0]
+
 
    
 # print(yearlyreturn(15,datetime.timedelta(days=90)))
