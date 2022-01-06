@@ -1,19 +1,20 @@
 import logging
 from kiteconnect import KiteConnect
+from kite_settings import *
 
 logging.basicConfig(level=logging.DEBUG)
 
-api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
-api_key = "t44a8jbiydzpqq8b"
-request_token = "HmmYxXG4F05fpmNVYfRW6YcrRwQehLQ1"
-access_token = "UqgUJ1LCgcDN7kPnAaS3Q2ZfkWjcN1dd"
-
-kite = KiteConnect(api_key=api_key)
-print(kite.login_url())
-
-data = kite.generate_session(request_token, api_secret=api_secret)
-print(data[access_token])
-kite.set_access_token(data[access_token])
+# api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
+# api_key = "t44a8jbiydzpqq8b"
+# request_token = "req2Z7moQhFAxPSEm4gmO07N86dZsLoO"
+# # access_token = ""
+#
+# kite = KiteConnect(api_key=api_key)
+# print(kite.login_url())
+#
+# data = kite.generate_session(request_token, api_secret=api_secret)
+# print(data['access_token'])
+# kite.set_access_token(data['access_token'])
 
 
 def kite_limit_buy(symbol, price, quantity, stoploss):
@@ -52,7 +53,7 @@ kite.orders()
 # get list of positions
 kite.positions()
 
-kite.holdings()
+print(kite.holdings())
 
 # fetch instruments
 exchange = ['NSE', 'BFO', 'BSE', 'CDS', 'MCX', 'NFO']
