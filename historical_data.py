@@ -11,7 +11,7 @@ kite = KiteConnect(api_key, api_secret)
 
 print(kite.login_url())
 
-data = kite.generate_session("HmmYxXG4F05fpmNVYfRW6YcrRwQehLQ1", api_secret)
+data = kite.generate_session("E6SwRpcRoQrVCBbFzOGPBTSs0iemvIbr", api_secret)
 print(data["access_token"])
 kite.set_access_token(data["access_token"])
 
@@ -26,7 +26,7 @@ def get_historical_data(from_, to_):
 def ltp(token):
     kite.ltp(token)
 
-print(ltp())
+print(ltp('INFY'))
 
 
 # kite.historical_data(self, 738561, from_date=2021-01-01 01:01:01)

@@ -1,5 +1,5 @@
 import logging
-from kitedata_postgres import *
+from kitedata_postgres_canbk import *
 from kiteconnect import KiteTicker
 import time
 
@@ -19,9 +19,9 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    ws.subscribe([3677697, 14366])
+    ws.subscribe([2763265, 10794])
 
-    ws.set_mode(ws.MODE_FULL, [3677697])
+    ws.set_mode(ws.MODE_FULL, [2763265])
 
 
 def on_close(ws, code, reason):
