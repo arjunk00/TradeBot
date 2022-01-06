@@ -21,20 +21,25 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    nifty200_token_list = []
-    with open('ind_nifty200list.csv') as file:
-        csvreader = csv.reader(file)
-        n=0
-        for row in csvreader:
-            n+=1
-            if n>5:
-                break
-            nifty200_token_list.append(stock_code_to_token(row[2]))
+    stock1 = ''
+    stock2 = ''
+    stock3 = ''
+    stock4 = ''
+    stock5 = ''
+    token_list = [stock_code_to_token(stock_code_to_token(stock1),stock_code_to_token(stock2),stock_code_to_token(stock3),stock_code_to_token(stock4),stock_code_to_token(stock5))]
+    # with open('ind_nifty200list.csv') as file:
+    #     csvreader = csv.reader(file)
+    #     n=0
+    #     for row in csvreader:
+    #         n+=1
+    #         if n>5:
+    #             break
+    #         nifty200_token_list.append(stock_code_to_token(row[2]))
 
 
-    ws.subscribe(nifty200_token_list)
+    ws.subscribe(token_list)
 
-    ws.set_mode(ws.MODE_FULL, nifty200_token_list)
+    ws.set_mode(ws.MODE_FULL, token_list)
 
 
 def on_close(ws, code, reason):
