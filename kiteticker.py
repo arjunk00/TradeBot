@@ -1,6 +1,7 @@
 import logging
 from kitedata_postgres import *
 from kiteconnect import KiteTicker
+from stockfunctions import stock_code_to_token, token_to_stock_code
 import time
 
 logging.basicConfig(level=logging.DEBUG)
@@ -9,7 +10,7 @@ api_key = "t44a8jbiydzpqq8b"
 access_token = "uMyIYRVXusyVmRLVuVy4RgTd2eqfg8Cy"
 kws = KiteTicker(api_key, access_token)
 
-tokens = [408065, 73856, 256265, 265]
+# tokens = [408065, 73856, 256265, 265]
 
 
 def on_ticks(ws, ticks):
@@ -19,9 +20,9 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    ws.subscribe([3677697, 14366])
+    ws.subscribe([stock_code_to_token('INFY'), stock_code_to_token('IDEA')])
 
-    ws.set_mode(ws.MODE_FULL, [3677697])
+    ws.set_mode(ws.MODE_FULL, [stock_code_to_token('INFY'),stock_code_to_token('IDEA')])
 
 
 def on_close(ws, code, reason):
