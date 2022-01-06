@@ -2,6 +2,7 @@ import logging
 from kitedata_postgres import *
 from kiteconnect import KiteTicker
 from stockfunctions import stock_code_to_token, token_to_stock_code
+import csv
 import time
 
 logging.basicConfig(level=logging.DEBUG)
@@ -20,9 +21,16 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    ws.subscribe([stock_code_to_token('INFY'), stock_code_to_token('IDEA')])
+    nifty200_token_list = []
+    with open('ind_nifty200list.csv') as file:
+        csvreader = csv.reader(file)
+        for row in csvreader:
+            nifty200_token_list.append(stock_code_to_token(row[2]))
 
-    ws.set_mode(ws.MODE_FULL, [stock_code_to_token('INFY'),stock_code_to_token('IDEA')])
+
+    ws.subscribe(nifty200_token_list)
+
+    ws.set_mode(ws.MODE_FULL, nifty200_token_list)
 
 
 def on_close(ws, code, reason):
