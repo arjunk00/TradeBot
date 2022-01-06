@@ -26,7 +26,7 @@ def on_connect(ws, response):
     stock3 = ''
     stock4 = ''
     stock5 = ''
-    token_list = [stock_code_to_token(stock_code_to_token(stock1),stock_code_to_token(stock2),stock_code_to_token(stock3),stock_code_to_token(stock4),stock_code_to_token(stock5))]
+    token_list = [stock_code_to_token(stock1),stock_code_to_token(stock2),stock_code_to_token(stock3),stock_code_to_token(stock4),stock_code_to_token(stock5)]
     # with open('ind_nifty200list.csv') as file:
     #     csvreader = csv.reader(file)
     #     n=0
