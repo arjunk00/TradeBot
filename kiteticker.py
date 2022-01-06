@@ -23,8 +23,12 @@ def on_ticks(ws, ticks):
 def on_connect(ws, response):
     nifty200_token_list = []
     with open('ind_nifty200list.csv') as file:
-        csvreader = csv.reader(file)[:100]
+        csvreader = csv.reader(file)
+        n=0
         for row in csvreader:
+            n+=1
+            if n>100:
+                break
             nifty200_token_list.append(stock_code_to_token(row[2]))
 
 
