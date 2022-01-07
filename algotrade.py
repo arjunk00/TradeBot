@@ -1,16 +1,16 @@
 import logging
-from kitedata_postgres import *
+# from kitedata_postgres import *
 from kiteconnect import KiteTicker
-from stockfunctions import stock_code_to_token, token_to_stock_code
+# from stockfunctions import stock_code_to_token, token_to_stock_code
 from kiteconnect_trade import *
 import statistics as st
 import csv
 import time
 
-logging.basicConfig(level=logging.DEBUG)
-api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
-api_key = "t44a8jbiydzpqq8b"
-access_token = "uMyIYRVXusyVmRLVuVy4RgTd2eqfg8Cy"
+# logging.basicConfig(level=logging.DEBUG)
+# api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
+# api_key = "t44a8jbiydzpqq8b"
+# access_token = "dofi017V4RNn7VBe1RPH22oeKf3elDdI"
 kws = KiteTicker(api_key, access_token)
 
 
@@ -28,7 +28,7 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    token = stock_code_to_token('IDEA')
+    token = 3677697 #stock_code_to_token('IDEA')
     ws.subscribe([token])
 
     ws.set_mode(ws.MODE_LTP,[token])
