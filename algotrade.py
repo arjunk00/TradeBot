@@ -2,15 +2,16 @@ import logging
 # from kitedata_postgres import *
 from kiteconnect import KiteTicker
 # from stockfunctions import stock_code_to_token, token_to_stock_code
-from kiteconnect_trade import *
+# from kiteconnect_trade import *
+# from kite_settings import *
 import statistics as st
 import csv
 import time
 
 # logging.basicConfig(level=logging.DEBUG)
 # api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
-# api_key = "t44a8jbiydzpqq8b"
-# access_token = "dofi017V4RNn7VBe1RPH22oeKf3elDdI"
+api_key = "t44a8jbiydzpqq8b"
+access_token = "dofi017V4RNn7VBe1RPH22oeKf3elDdI"
 kws = KiteTicker(api_key, access_token)
 
 
@@ -45,7 +46,7 @@ kws.on_close = on_close
 kws.connect(threaded=True)
 
 while True:
-    if last_100<99:
+    if len(last_100)<99:
         continue
     else:
         mode = st.mode(last_100)
