@@ -5,8 +5,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
 api_key = "t44a8jbiydzpqq8b"
-request_token = "F96lS1lMl2V9vAb8r3ecBqpoYmVFQGGa"
-access_token = "dofi017V4RNn7VBe1RPH22oeKf3elDdI"
+request_token = "QzPjE5CtDl41w7NWpwJnuLeE32bjhmO0"
+access_token = "5hQI4oo9QSn704JSDJCmkWj0YJjT8xRH"
 
 kite = KiteConnect(api_key)
 print(kite.login_url())

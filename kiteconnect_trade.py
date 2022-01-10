@@ -1,13 +1,12 @@
 import logging
-from kiteconnect import KiteConnect
-from kite_settings import *
-
-logging.basicConfig(level=logging.DEBUG)
-
+# from kite_settings import *
+#
+# logging.basicConfig(level=logging.DEBUG)
+#
 # api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
 # api_key = "t44a8jbiydzpqq8b"
 # request_token = "req2Z7moQhFAxPSEm4gmO07N86dZsLoO"
-# # access_token = ""
+# access_token = "dofi017V4RNn7VBe1RPH22oeKf3elDdI"
 #
 # kite = KiteConnect(api_key=api_key)
 # print(kite.login_url())
@@ -46,15 +45,15 @@ def kite_limit_sell(symbol, price, quantity, stoploss):
     logging.info("Order placed, order ID is - {}".format(sell_order_id))
     return sell_order_id
 
-
-# fetch all orders
-kite.orders()
-
-# get list of positions
-kite.positions()
-
-print(kite.holdings())
-
-# fetch instruments
-exchange = ['NSE', 'BFO', 'BSE', 'CDS', 'MCX', 'NFO']
-kite.instruments(exchange="NSE")
+#
+# # fetch all orders
+# kite.orders()
+#
+# # get list of positions
+# kite.positions()
+#
+# print(kite.holdings())
+#
+# # fetch instruments
+# exchange = ['NSE', 'BFO', 'BSE', 'CDS', 'MCX', 'NFO']
+# kite.instruments(exchange="NSE")
