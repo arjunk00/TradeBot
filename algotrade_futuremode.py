@@ -52,6 +52,12 @@ def kite_limit_sell(symbol, price, quantity, stoploss):
     logging.info("Order placed, order ID is - {}".format(sell_order_id))
     return sell_order_id
 
+def cancel_order(orderid):
+    kite.cancel_order(
+        variety = kite.VARIETY_REGULAR,
+        order_id = orderid
+    )
+
 def on_ticks(ws, ticks):
     for tick in ticks:
         if len(last_N)<=N:
@@ -79,39 +85,9 @@ kws.on_connect = on_connect
 kws.on_close = on_close
 
 kws.connect(threaded=True)
-bought = True
-sold = True
-buy_id = ''
-sell_id = ''
+
 while True:
     if len(last_N)<N-1:
         continue
     else:
-        mode = st.mode(last_N)
-        lower_mode = mode-0.05
-        upper_mode = mode+0.05
-        upper_freq = last_N.count(upper_mode)
-        lower_freq = last_N.count(lower_mode)
-        for order in kite.orders():
-                if buy_id == '' and sell_id == '':
-                    break
-                if order['order_id']==buy_id and order['status']=='COMPLETE':
-                    bought = True
-                elif order['order_id']==sell_id and order['status']=='COMPLETE':
-                    sold = True
-        if bought and sold:
-            if upper_freq>=lower_freq:
-                buy_id = kite_limit_buy('IDEA',mode,6,0)
-                sell_id = kite_limit_sell('IDEA',upper_mode,6,0)
-                bought = sold = False
-            else:
-                buy_id = kite_limit_buy('IDEA',lower_mode,6,0)
-                sell_id = kite_limit_sell('IDEA',mode,6,0)
-                bought = sold = False
         
-
-
-
-
-
-
