@@ -90,4 +90,8 @@ while True:
     if len(last_N)<N-1:
         continue
     else:
-        
+        mode = st.mode(last_N)
+        lower_mode = mode-0.05
+        upper_mode = mode+0.05
+        upper_freq = last_N.count(upper_mode)
+        lower_freq = last_N.count(lower_mode)
