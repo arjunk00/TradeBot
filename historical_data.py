@@ -11,7 +11,7 @@ kite = KiteConnect(api_key, api_secret)
 
 print(kite.login_url())
 
-data = kite.generate_session("LhGxXHJG82sYJKUwIZJWjrKhLBuzNhPV", api_secret)
+data = kite.generate_session("FW74dgf7gDvO9S7EJ8AT4wsxX9OifFvx", api_secret)
 print(data["access_token"])
 kite.set_access_token(data["access_token"])
 

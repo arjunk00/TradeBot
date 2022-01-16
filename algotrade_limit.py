@@ -1,5 +1,6 @@
 import logging
 from kiteconnect import KiteTicker, KiteConnect
+from stockfunctions import stock_code_to_token, token_to_stock_code
 # from kiteconnect_trade import *
 import statistics as st
 import math as mt
@@ -65,7 +66,7 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    token = 3677697 #stock_code_to_token('IDEA')
+    token = stock_code_to_token('IDEA')
     ws.subscribe([token])
 
     ws.set_mode(ws.MODE_LTP,[token])

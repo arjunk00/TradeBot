@@ -45,7 +45,7 @@ def marubozu(stock_code,day):
 
 def stock_code_to_token(tradingsymbol):
     ts=tradingsymbol
-    conn=psycopg2.connect(database="marubozu_data", user="arjun", password="1234", host="127.0.0.1", port="5432")
+    conn=psycopg2.connect(database="marubozu_data", user="admin", password="xtremebutter", host="192.168.1.25", port="5432")
     cur=conn.cursor()
     fetch_token = "SELECT instrument_token from nse_tokens WHERE tradingsymbol='{}';".format(ts)
     cur.execute(fetch_token)
@@ -54,7 +54,7 @@ def stock_code_to_token(tradingsymbol):
     return tokens[0]
 
 def token_to_stock_code(token):
-    conn=psycopg2.connect(database="marubozu_data", user="arjun", password="1234", host="127.0.0.1", port="5432")
+    conn=psycopg2.connect(database="marubozu_data", user="admin", password="xtremebutter", host="192.168.1.25", port="5432")
     cur=conn.cursor()
     fetch_token = "SELECT tradingsymbol from nse_tokens WHERE instrument_token='{}';".format(str(token))
     cur.execute(fetch_token)

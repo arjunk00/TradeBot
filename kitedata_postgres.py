@@ -3,7 +3,7 @@ from stockfunctions import token_to_stock_code
 
 # $ psql -h localhost -d mydatabase -U myuser -p <port>
 
-conn = psycopg2.connect(database="marubozu_data", user="arjun", password="1234", host="127.0.0.1", port="5432")
+conn = psycopg2.connect(database="marubozu_data", user="admin", password="xtremebutter", host="192.168.1.25", port="5432")
 
 
 # create_table_query = ''' CREATE TABLE ticks
@@ -19,12 +19,20 @@ conn = psycopg2.connect(database="marubozu_data", user="arjun", password="1234",
 def insert_ticks(ticks):
     cur = conn.cursor()
     for tick in ticks:
-        create_ifnot_exists = 'CREATE TABLE IF NOT EXISTS {}(token BIGINT NOT NULL, t_stamp TIMESTAMP WITHOUT TIME ZONE NOT NULL, ltp DOUBLE PRECISION, volume_traded BIGINT)'.format(token_to_stock_code(tick['instrument_token']))
+        create_ifnot_exists = 'CREATE TABLE IF NOT EXISTS {}(token BIGINT NOT NULL, t_stamp TIMESTAMP WITHOUT TIME ZONE NOT NULL, ltp DOUBLE PRECISION, volume_traded BIGINT,total_bids BIGINT, total_asks BIGINT)'.format(token_to_stock_code(tick['instrument_token']))
         cur.execute(create_ifnot_exists)
-        insert_into_table='INSERT INTO {}(token, t_stamp, ltp, volume_traded) VALUES (%(token)s, %(t_stamp)s, %(ltp)s, %(volume_traded)s)'.format(token_to_stock_code(tick['instrument_token']))
+        insert_into_table='INSERT INTO {}(token, t_stamp, ltp, volume_traded) VALUES (%(token)s, %(t_stamp)s, %(ltp)s, %(volume_traded)s, %(total_bids)s, %(total_asks)s)'.format(token_to_stock_code(tick['instrument_token']))
+        depth = tick['depth']
+        bidask_info = {'total_bids':0,'total_asks':0}
+        for i in depth['buy']:
+            bidask_info['total_bids'] += i['quantity']*i['orders']
+        for j in depth['sell']:
+            bidask_info['total_asks'] += i['quantity']*i['orders']
         cur.execute(insert_into_table, {
             "token": tick["instrument_token"],
             "t_stamp": tick["last_trade_time"],
             "ltp": tick["last_price"],
-            "volume_traded":tick["volume_traded"]})
+            "volume_traded": tick["volume_traded"],
+            "total_bids": bidask_info['total_bids'],
+            "total_asks": bidask_info['total_asks']})
         conn.commit()
