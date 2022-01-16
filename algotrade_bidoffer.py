@@ -22,7 +22,7 @@ kws = KiteTicker(api_key, data["access_token"])
 
 N = 50
 last_N = []
-bidask_info = {'total_bids':0,'total_asks':0}
+bidask_info = {'total_bids':0,'total_offers':0}
 depth = [1]
 
 def kite_limit_buy(symbol, price, quantity, stoploss):
@@ -110,7 +110,7 @@ while True:
         for i in depth_cur['buy']:
             bidask_info['total_bids'] += i['quantity']*i['orders']
         for j in depth_cur['sell']:
-            bidask_info['total_asks'] += i['quantity']*i['orders']
+            bidask_info['total_offers'] += i['quantity']*i['orders']
         
 
 

@@ -29,7 +29,7 @@ def on_connect(ws, response):
     #         if n>5:
     #             break
     #         nifty200_token_list.append(stock_code_to_token(row[2]))
-    tokens=[stock_code_to_token('TCS')]#,stock_code_to_token('IRCTC'),stock_code_to_token('ITC'),stock_code_to_token('CANBK'),stock_code_to_token('DIVISLAB')]
+    tokens=[stock_code_to_token('ACC')]#,stock_code_to_token('IRCTC'),stock_code_to_token('ITC'),stock_code_to_token('CANBK'),stock_code_to_token('DIVISLAB')]
 
     ws.subscribe(tokens)
 
