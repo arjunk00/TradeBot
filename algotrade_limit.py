@@ -2,12 +2,13 @@ import logging
 from kiteconnect import KiteTicker, KiteConnect
 # from kiteconnect_trade import *
 import statistics as st
+import math as mt
 
 logging.basicConfig(level=logging.DEBUG)
 
 api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
 api_key = "t44a8jbiydzpqq8b"
-request_token = "9Q0xyLFkLEKtNWvyFMrOFlap8WsK4A2w"
+request_token = "I5PudX2Bh1LozGhwUW5ldETcoKhAqW75"
 # access_token = "dofi017V4RNn7VBe1RPH22oeKf3elDdI"
 
 kite = KiteConnect(api_key=api_key)
@@ -88,8 +89,8 @@ while True:
         continue
     else:
         mode = st.mode(last_N)
-        lower_mode = mode-0.05
-        upper_mode = mode+0.05
+        lower_mode = float(mt.trunc((mode-0.05)*100)/100)
+        upper_mode = float(mt.trunc((mode+0.05)*100)/100)
         upper_freq = last_N.count(upper_mode)
         lower_freq = last_N.count(lower_mode)
         for order in kite.orders():

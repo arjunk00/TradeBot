@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
 api_key = "t44a8jbiydzpqq8b"
-request_token = "rGLLeezj5706tfZ8blHxycHzm7riXYin"
+request_token = "8H5geKY7Z77BZqziPihTt0PIzMcQiW2h"
 # access_token = "dofi017V4RNn7VBe1RPH22oeKf3elDdI"
 
 kite = KiteConnect(api_key=api_key)
@@ -22,6 +22,8 @@ kws = KiteTicker(api_key, data["access_token"])
 
 N = 50
 last_N = []
+bidask_info = {'total_bids':0,'total_asks':0}
+depth = [1]
 
 def kite_limit_buy(symbol, price, quantity, stoploss):
     buy_order_id = kite.place_order(exchange=kite.EXCHANGE_NSE,
@@ -61,7 +63,8 @@ def cancel_order(orderid):
 
 def on_ticks(ws, ticks):
     for tick in ticks:
-        # print(type(tick['last_price']))
+        depth.append(tick['depth'])
+        del depth[0]
         if len(last_N)<=N:
             last_N.append(tick['last_price'])
         else:
@@ -75,7 +78,7 @@ def on_connect(ws, response):
     token = 3677697 #stock_code_to_token('IDEA')
     ws.subscribe([token])
 
-    ws.set_mode(ws.MODE_LTP,[token])
+    ws.set_mode(ws.MODE_FULL,[token])
 
 
 def on_close(ws, code, reason):
@@ -97,9 +100,19 @@ while True:
         upper_mode = float(mt.trunc((mode+0.05)*100)/100)
         upper_freq = last_N.count(upper_mode)
         lower_freq = last_N.count(lower_mode)
-        print(lower_mode,lower_freq,upper_mode,upper_freq)
-        # if lower_freq>upper_freq:
-        #     print(lower_mode)
-        # else:
-        #     print(upper_mode)
+        if lower_freq<upper_freq:
+            currpair = [mode,upper_mode]
+        elif lower_freq>upper_freq:
+            currpair = [lower_mode,mode]
+        else:
+            continue
+        depth_cur = depth[-1]
+        for i in depth_cur['buy']:
+            bidask_info['total_bids'] += i['quantity']*i['orders']
+        for j in depth_cur['sell']:
+            bidask_info['total_asks'] += i['quantity']*i['orders']
+        
 
+
+
+        
