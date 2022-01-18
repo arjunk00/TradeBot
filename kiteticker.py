@@ -1,16 +1,7 @@
-import logging
+from kite_settings import *
 from kitedata_postgres import *
 from kiteconnect import KiteTicker
 from stockfunctions import stock_code_to_token, token_to_stock_code
-
-
-# logging.basicConfig(level=logging.DEBUG)
-# api_secret = 'rkvip6z4jhn1fn5rifnrtbh707ukaf8x'
-api_key = "t44a8jbiydzpqq8b"
-access_token = "1BuXuG16H1pWR69ZuMzs6MlZExSo4bEA"
-kws = KiteTicker(api_key, access_token)
-
-# tokens = [408065, 73856, 256265, 265]
 
 
 def on_ticks(ws, ticks):
@@ -29,7 +20,8 @@ def on_connect(ws, response):
     #         if n>5:
     #             break
     #         nifty200_token_list.append(stock_code_to_token(row[2]))
-    tokens=[stock_code_to_token('ACC')]#,stock_code_to_token('IRCTC'),stock_code_to_token('ITC'),stock_code_to_token('CANBK'),stock_code_to_token('DIVISLAB')]
+    tokens = [stock_code_to_token(
+        'ACC')]  # ,stock_code_to_token('IRCTC'),stock_code_to_token('ITC'),stock_code_to_token('CANBK'),stock_code_to_token('DIVISLAB')]
 
     ws.subscribe(tokens)
 
@@ -45,5 +37,3 @@ kws.on_connect = on_connect
 kws.on_close = on_close
 
 kws.connect()
-
-
