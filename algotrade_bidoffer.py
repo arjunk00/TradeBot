@@ -1,5 +1,6 @@
 import logging
 from kiteconnect import KiteTicker, KiteConnect
+from stockfunctions import stock_code_to_token
 # from kiteconnect_trade import *
 import statistics as st
 import math as mt
@@ -75,7 +76,7 @@ def on_ticks(ws, ticks):
 
 
 def on_connect(ws, response):
-    token = 3677697 #stock_code_to_token('IDEA')
+    token = stock_code_to_token('IDEA')
     ws.subscribe([token])
 
     ws.set_mode(ws.MODE_FULL,[token])
@@ -90,6 +91,10 @@ kws.on_connect = on_connect
 kws.on_close = on_close
 
 kws.connect(threaded=True)
+
+buy_id=sell_id=''
+bought = True
+sold = True
 
 while True:
     if len(last_N)<N-1:
@@ -111,6 +116,27 @@ while True:
             bidask_info['total_bids'] += i['quantity']*i['orders']
         for j in depth_cur['sell']:
             bidask_info['total_offers'] += i['quantity']*i['orders']
+        
+        for order in kite.orders():
+                if buy_id == '' and sell_id == '':
+                    break
+                if order['order_id']==buy_id and order['status']=='COMPLETE':
+                    bought = True
+                elif order['order_id']==sell_id and order['status']=='COMPLETE':
+                    sold = True
+        if bought and sold:
+            if bidask_info['total_bids']<bidask_info['total_offers']:
+                buy_id = kite_limit_buy('IDEA',currpair[0]-0.05,6)
+                sell_id = kite_limit_sell('IDEA',currpair[0],6)
+                bought = sold = False
+            elif bidask_info['total_bids']>bidask_info['total_offers']:
+                buy_id = kite_limit_buy('IDEA',currpair[1],6)
+                sell_id = kite_limit_sell('IDEA',currpair[1]+0.05,6)
+                bought = sold = False
+            else:
+                continue
+
+
         
 
 
