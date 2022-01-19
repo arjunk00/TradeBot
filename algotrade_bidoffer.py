@@ -72,12 +72,12 @@ while True:
                 sold = True
         if bought and sold:
             if bidask_info['total_bids'] < bidask_info['total_offers']:
-                buy_id = kite_limit_buy('IDEA', currpair[0] - 0.05, 6)
-                sell_id = kite_limit_sell('IDEA', currpair[0], 6)
+                buy_id = kite_limit_buy('IDEA', currpair[0] - 0.05, 6,0)
+                sell_id = kite_limit_sell('IDEA', currpair[0], 6,0)
                 bought = sold = False
             elif bidask_info['total_bids'] > bidask_info['total_offers']:
-                buy_id = kite_limit_buy('IDEA', currpair[1], 6)
-                sell_id = kite_limit_sell('IDEA', currpair[1] + 0.05, 6)
+                buy_id = kite_limit_buy('IDEA', currpair[1], 6,0)
+                sell_id = kite_limit_sell('IDEA', currpair[1] + 0.05, 6,0)
                 bought = sold = False
             else:
                 continue

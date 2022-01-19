@@ -11,7 +11,7 @@ def kite_limit_buy(symbol, price, quantity, stoploss):
                                     price=price,
                                     stoploss=stoploss,
                                     validity=kite.VALIDITY_DAY,
-                                    variety=None)
+                                    variety=kite.VARIETY_REGULAR)
     logging.info("Order placed, order ID is - {}".format(buy_order_id))
     return buy_order_id
 
