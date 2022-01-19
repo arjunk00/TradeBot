@@ -20,8 +20,7 @@ def on_connect(ws, response):
     #         if n>5:
     #             break
     #         nifty200_token_list.append(stock_code_to_token(row[2]))
-    tokens = [stock_code_to_token(
-        'ACC')]  # ,stock_code_to_token('IRCTC'),stock_code_to_token('ITC'),stock_code_to_token('CANBK'),stock_code_to_token('DIVISLAB')]
+    tokens = [stock_code_to_token('IDEA') ,stock_code_to_token('IRCTC'),stock_code_to_token('ITC'),stock_code_to_token('CANBK'),stock_code_to_token('PNB')]
 
     ws.subscribe(tokens)
 
@@ -29,7 +28,7 @@ def on_connect(ws, response):
 
 
 def on_close(ws, code, reason):
-    ws.stop()
+    pass
 
 
 kws.on_ticks = on_ticks
