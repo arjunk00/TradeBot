@@ -9,11 +9,11 @@ class Strategy(bt.Strategy):
         print(f'{dt.isoformat()}{txt}')
 
     def next(self):
-        self.log('Close: ',self.dataclose[0])
+        self.log(' %.2f' % self.dataclose[0])
 
 cerebro = bt.Cerebro()
 
-data = bt.feeds.GenericCSVData(dataname = "AARTIIND__EQ__NSE__NSE__MINUTE.csv")
+data = bt.feeds.YahooFinanceCSVData(dataname = "RELIANCE.NS.csv")
 cerebro.adddata(data)
 
 cerebro.addstrategy(Strategy)
