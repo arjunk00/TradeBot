@@ -68,7 +68,7 @@ def ohlc(ticks):
     ticks.sort()
     low = ticks[0]
     high = ticks[-1]
-    return (open, high, low, close)
+    return [open, high, low, close]
    
 # print(yearlyreturn(15,datetime.timedelta(days=90)))
 
