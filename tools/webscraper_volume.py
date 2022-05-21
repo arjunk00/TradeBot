@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 from threading import *
-
+prices =[]
 volumes = []
 class VolumeTicker(Thread):
     def __init__(self, symbol):
@@ -27,20 +27,20 @@ class PriceTicker(Thread):
         self.stock_code = symbol
     def run(self):
         while True:
-            url = "https://www.google.com/finance/quote/BTC-USD"
+            url = "https://www.google.com/finance/quote/"+self.stock_code+":NSE"
             r = requests.get(url)
             soup = BeautifulSoup(r.text, 'html.parser')
 
             fetch = soup.find('div', {'class': 'YMlKec fxKbKc'}).text
 
-            price_string = (fetch[0:])
+            price_string = (fetch[1:])
             s1 = price_string.translate({ord(','): None})
 
             price = float(s1)
-            
-            time.sleep(2)
-relscrap = VolumeTicker('RELIANCE')
+            prices.append(price)
+            time.sleep(1)
+relscrap = PriceTicker('RELIANCE')
 relscrap.start()
 while True:
-    print(volumes)
+    print(prices)
     time.sleep(1)
