@@ -63,8 +63,12 @@ def token_to_stock_code(token):
     return stock_codes[0]
 
 def ohlc(ticks):
-    pass
-
+    open = ticks[0]
+    close = ticks[-1]
+    ticks.sort()
+    low = ticks[0]
+    high = ticks[-1]
+    return (open, high, low, close)
    
 # print(yearlyreturn(15,datetime.timedelta(days=90)))
 
