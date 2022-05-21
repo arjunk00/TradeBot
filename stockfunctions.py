@@ -62,6 +62,8 @@ def token_to_stock_code(token):
     conn.close()
     return stock_codes[0]
 
+def ohlc(ticks):
+    pass
 
    
 # print(yearlyreturn(15,datetime.timedelta(days=90)))
