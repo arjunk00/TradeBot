@@ -13,7 +13,7 @@ class Strategy(bt.Strategy):
 
 cerebro = bt.Cerebro()
 
-data = bt.feeds.YahooFinanceCSVData(dataname = "RELIANCE.NS.csv")
+data = bt.feeds.YahooFinanceCSVData(dataname = "AARTIIND__EQ__NSE__NSE__MINUTE.csv")
 cerebro.adddata(data)
 
 cerebro.addstrategy(Strategy)
