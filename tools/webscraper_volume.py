@@ -4,7 +4,7 @@ import time
 from threading import *
 
 volumes = []
-class print_volume(Thread):
+class VolumeTicker(Thread):
     def __init__(self, symbol):
         super().__init__()
         self.stock_code = symbol
@@ -21,8 +21,25 @@ class print_volume(Thread):
             volumes.append(volume)
             time.sleep(1)
 
+class PriceTicker(Thread):
+    def __init__(self, symbol):
+        super().__init__()
+        self.stock_code = symbol
+    def run(self):
+        while True:
+            url = "https://www.google.com/finance/quote/BTC-USD"
+            r = requests.get(url)
+            soup = BeautifulSoup(r.text, 'html.parser')
 
-relscrap = print_volume('RELIANCE')
+            fetch = soup.find('div', {'class': 'YMlKec fxKbKc'}).text
+
+            price_string = (fetch[0:])
+            s1 = price_string.translate({ord(','): None})
+
+            price = float(s1)
+            
+            time.sleep(2)
+relscrap = VolumeTicker('RELIANCE')
 relscrap.start()
 while True:
     print(volumes)
