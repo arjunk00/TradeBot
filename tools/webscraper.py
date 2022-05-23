@@ -26,10 +26,8 @@ class VolumeTicker(Thread):
                 self.vollist.append(dt.datetime.now())
                 self.vollist.append(volume)
             elif dt.datetime.now() <= self.vollist[0] + self.duration:
-                print("chapri1")
                 self.vollist.append(volume)
             elif dt.datetime.now() > self.vollist[0] + self.duration:
-                print("chapri")
                 self.vollistcopy = self.vollist
                 self.vollist = []
             
@@ -65,11 +63,11 @@ class PriceTicker(Thread):
                 self.pricelistcopy = self.pricelist
                 self.pricelist = []
             time.sleep(self.interval)
-relpricescrap = PriceTicker('RELIANCE',dt.timedelta(seconds=30), 1)
-volscrap = VolumeTicker('RELIANCE',dt.timedelta(seconds = 30), 1)
-relpricescrap.start()
-volscrap.start()
-while True:
-    # print(relpricescrap.pricelist)
-    print(volscrap.vollist)
-    time.sleep(1)
+# relpricescrap = PriceTicker('RELIANCE',dt.timedelta(seconds=30), 1)
+# volscrap = VolumeTicker('RELIANCE',dt.timedelta(seconds = 30), 1)
+# relpricescrap.start()
+# volscrap.start()
+# while True:
+#     # print(relpricescrap.pricelist)
+#     print(volscrap.vollist)
+#     time.sleep(1)

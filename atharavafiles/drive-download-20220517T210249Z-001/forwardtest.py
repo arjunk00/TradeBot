@@ -1,6 +1,6 @@
 from kiteconnect_trade import *
 from pickleextract import *
-from stockfunctions import stock_code_to_token, token_to_stock_code, ohlc
+from tools.stockfunctions import stock_code_to_token, token_to_stock_code, ohlc
 import datetime as dt
 # you need following packages
 import numpy as np

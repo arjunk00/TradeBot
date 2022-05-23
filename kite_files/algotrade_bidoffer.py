@@ -1,4 +1,4 @@
-from stockfunctions import stock_code_to_token
+from tools.stockfunctions import stock_code_to_token
 from kite_settings import *
 from kiteconnect_trade import *
 import statistics as st

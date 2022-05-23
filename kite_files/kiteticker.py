@@ -1,7 +1,7 @@
 from kite_settings import *
 from kitedata_postgres import *
 from kiteconnect import KiteTicker
-from stockfunctions import stock_code_to_token, token_to_stock_code
+from tools.stockfunctions import stock_code_to_token, token_to_stock_code
 
 
 def on_ticks(ws, ticks):

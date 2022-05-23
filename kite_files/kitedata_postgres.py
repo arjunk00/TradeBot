@@ -1,5 +1,5 @@
 import psycopg2
-from stockfunctions import token_to_stock_code
+from tools.stockfunctions import token_to_stock_code
 
 # $ psql -h localhost -d mydatabase -U myuser -p <port>
 

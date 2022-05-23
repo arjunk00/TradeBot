@@ -1,5 +1,5 @@
 import psycopg2
-import stockfunctions
+import tools.stockfunctions as stockfunctions
 
 print(stockfunctions.stock_code_to_token('IDEA'))
 

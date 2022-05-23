@@ -1,4 +1,4 @@
-from stockfunctions import *
+from tools.stockfunctions import *
 import matplotlib.pyplot as plt
 stock_code = 'INFY'
 now = datetime.datetime.now()

@@ -1,4 +1,4 @@
-from stockfunctions import marubozu
+from tools.stockfunctions import marubozu
 import csv
 import datetime
 M = 0
