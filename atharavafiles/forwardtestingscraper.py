@@ -11,9 +11,8 @@ import csv
 duration = dt.timedelta(minutes = 1)
 stock_code = 'ADANIPORTS'
 
-f = open('adanitest.csv','a+')
-writer = csv.writer(f)
-writer.writerow(['Date','Time','Open','High','Low','Close','Signal','Price','alpha'])
+
+# writer.writerows([['Date','Time','Open','High','Low','Close','Signal','Price','alpha']])
 
 volticks = ws.VolumeTicker(stock_code,duration,1)
 priceticks = ws.PriceTicker(stock_code,duration,1)
@@ -34,22 +33,24 @@ while True:
         df.append(volticks.vollistcopy[-1]-volticks.vollistcopy[1])
         dfarr = np.array(df,ndmin=2)
         linregobj = regobj(stock_code) 
-        up_prob = linregobj.predict(dfarr) # denoted as alpha in pdf
+        up_prob = linregobj.predict(dfarr)[0][0] # denoted as alpha in pdf
         if up_prob > threshold_dict[stock_code]:
             if df[0] > df[3]:
                 print("B")
                 signal = "B"
             else:
                 print("H")
-                signal = ''
+                signal = None
         else:
             if df[0] > df[3]:
                 print("H")
-                signal = ''
+                signal = None
             else:
                 print("S")
                 signal = "S"
-        writer.writerow([priceticks.pricelistcopy[0].date(),priceticks.pricelistcopy[0].time(),df[0],df[1],df[2],df[3],signal,priceticks.pricelistcopy[-1],up_prob])
+        with open('adanitest.csv','a+') as file:
+            writer = csv.writer(file,delimiter=',')
+            writer.writerow([priceticks.pricelistcopy[0].date(),priceticks.pricelistcopy[0].time(),df[0],df[1],df[2],df[3],signal,priceticks.pricelistcopy[-1],up_prob])
         priceticks.pricelistcopy = []
     else:
         print("You shouldnt be here")
