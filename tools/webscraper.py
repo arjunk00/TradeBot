@@ -15,10 +15,11 @@ class VolumeTicker(Thread):
     def run(self):
         while True:
             url = "https://finance.yahoo.com/quote/"+self.stock_code+".NS?p="+self.stock_code+".NS&.tsrc=fin-srch"
+            # https: // finance.yahoo.com / quote / DRREDDY.NS?p = DRREDDY.NS &.tsrc = fin - srch
             r=requests.get(url)
             soup = BeautifulSoup(r.text, 'html.parser')
 
-            fetch = soup.find('td', {'data-test':'TD_VOLUME-value'}).text
+            fetch = soup.find('td', {'data-test': 'TD_VOLUME-value'}).text
 
             s1 = fetch.translate({ord(','): None})
             volume = int(s1)

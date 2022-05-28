@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0,'C:\\Informatics Practices\\gitprojects\\TradeBot\\tools')
+sys.path.insert(0,'/home/fernblade/TradeBot/tools')
 from stockfunctions import ohlc
 import datetime as dt
 import webscraper as ws

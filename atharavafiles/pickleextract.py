@@ -1,4 +1,4 @@
 import pickle
 def regobj(stock_code):
-    linregobj = pickle.load(open('atharavafiles\\linear_regression '+stock_code+'.pickle','rb'))
+    linregobj = pickle.load(open('/home/fernblade/TradeBot/atharavafiles/linear_regression_'+stock_code+'.pickle','rb'))
     return linregobj
