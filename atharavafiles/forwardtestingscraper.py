@@ -8,8 +8,8 @@ import numpy as np
 import csv
 
 
-duration = dt.timedelta(minutes = 1)
-stock_code = 'ADANIPORTS'
+duration = dt.timedelta(minutes = 5)
+stock_code = 'DRREDDY'
 
 
 # writer.writerows([['Date','Time','Open','High','Low','Close','Signal','Price','alpha']])
@@ -48,7 +48,7 @@ while True:
             else:
                 print("S")
                 signal = "S"
-        with open('adanitest.csv','a+') as file:
+        with open('drreddytest.csv','a+') as file:
             writer = csv.writer(file,delimiter=',')
             writer.writerow([priceticks.pricelistcopy[0].date(),priceticks.pricelistcopy[0].time(),df[0],df[1],df[2],df[3],signal,priceticks.pricelistcopy[-1],up_prob])
         priceticks.pricelistcopy = []
