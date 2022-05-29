@@ -1,3 +1,4 @@
+import datetime
 import sys
 sys.path.insert(0,'/home/fernblade/TradeBot/tools')
 from stockfunctions import ohlc
@@ -29,7 +30,9 @@ class ForwardTest(Thread):
         priceticks.start()
 
         threshold_dict = {'DRREDDY': 0.41878420750591105, 'HINDUNILVR': 0.43559159507797407,
-                        'ADANIPORTS': 0.6452825406318907,'AXISBANK': 0.4541107217201816}
+                        'ADANIPORTS': 0.6452825406318907,'AXISBANK': 0.4541107217201816,
+                          'APOLLOHOSP': 0.6086177020679596, 'BHARTIARTL': 0.4082868996895255,
+                          'ICICIBANK': 0.2612070711103042, 'TATASTEEL': 0.5850011395166405}
 
         while True:
             if priceticks.pricelistcopy == []:
@@ -47,19 +50,26 @@ class ForwardTest(Thread):
                     if df[0] > df[3]:
                         print("B")
                         signal = "B"
+                        date_time=datetime.datetime.now()
                     else:
                         print("H")
                         signal = None
+                        date_time=datetime.datetime.now()
+
                 else:
                     if df[0] > df[3]:
                         print("H")
                         signal = None
+                        date_time=datetime.datetime.now()
+
                     else:
                         print("S")
                         signal = "S"
+                        date_time=datetime.datetime.now()
+
                 with open(self.stock_code+'.csv','a+') as file:
                     writer = csv.writer(file,delimiter=',')
-                    writer.writerow([priceticks.pricelistcopy[0].date(),priceticks.pricelistcopy[0].time(),df[0],df[1],df[2],df[3],signal,priceticks.pricelistcopy[-1],up_prob])
+                    writer.writerow([date_time.date(),date_time.time(),df[0],df[1],df[2],df[3],signal,priceticks.pricelistcopy[-1],up_prob])
                 priceticks.pricelistcopy = []
             else:
                 print("You shouldnt be here")
