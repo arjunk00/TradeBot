@@ -1,6 +1,6 @@
 import datetime
 import sys
-sys.path.insert(0,'/home/fernblade/TradeBot/tools')
+sys.path.insert(0,'../tools')
 from stockfunctions import ohlc
 import datetime as dt
 import webscraper as ws
