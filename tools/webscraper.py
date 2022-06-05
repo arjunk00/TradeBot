@@ -18,11 +18,12 @@ class VolumeTicker(Thread):
             # https: // finance.yahoo.com / quote / DRREDDY.NS?p = DRREDDY.NS &.tsrc = fin - srch
             r=requests.get(url)
             soup = BeautifulSoup(r.text, 'html.parser')
-
-            fetch = soup.find('td', {'data-test': 'TD_VOLUME-value'}).text
-
-            s1 = fetch.translate({ord(','): None})
-            volume = int(s1)
+            try:
+                fetch = soup.find('td', {'data-test': 'TD_VOLUME-value'}).text
+                s1 = fetch.translate({ord(','): None})
+                volume = int(s1)
+            except:
+                continue
             if len(self.vollist) == 0:
                 self.vollist.append(dt.datetime.now())
                 self.vollist.append(volume)
@@ -31,9 +32,9 @@ class VolumeTicker(Thread):
             elif dt.datetime.now() > self.vollist[0] + self.duration:
                 self.vollistcopy = self.vollist
                 self.vollist = []
-            
+
             time.sleep(self.interval)
-        
+
 
 class PriceTicker(Thread):
     def __init__(self, symbol,duration,interval):
