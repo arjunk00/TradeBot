@@ -6,6 +6,9 @@ import math
 import datetime
 import pandas as pd
 import psycopg2
+import sqlite3 
+conn = sqlite3.connect("../databases/test.db")
+cursor = conn.cursor()
 nse = Nse()
 
 def fallbuy(stock_code):
@@ -69,7 +72,18 @@ def ohlc(ticks):
     low = ticks[0]
     high = ticks[-1]
     return [open, high, low, close]
-   
+
+def store(tablename,tuplelist):
+    insert_qry = "insert into {} values "+str(tuplelist)+";".format(tablename) 
+    cursor.execute(insert_qry)
+
+def createsignaltable(stock_code):
+    #['Date','Time','Open','High','Low','Close','Signal','Price','alpha']
+    create_qry = "create table {}(Date TEXT,Time TEXT,Open REAL,High REAL,Low REAL,Close REAL,Signal CHARACTER(1),Price REAL,alpha REAL);"
+    cursor.execute(create_qry)
+
+
+
 # print(yearlyreturn(15,datetime.timedelta(days=90)))
 
 # day = datetime.date(2021,12,30)
