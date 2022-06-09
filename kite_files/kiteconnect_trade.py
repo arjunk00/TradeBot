@@ -30,6 +30,27 @@ def kite_limit_sell(symbol, price, quantity, stoploss):
     logging.info("Order placed, order ID is - {}".format(sell_order_id))
     return sell_order_id
 
+def kite_market_buy(symbol, quantity, stoploss):
+    buy_order_id = kite.place_order(exchange=kite.EXCHANGE_NSE,
+                                     tradingsymbol=symbol,
+                                     transaction_type=kite.TRANSACTION_TYPE_BUY,
+                                     quantity=quantity,
+                                     product=kite.PRODUCT_MIS,
+                                     order_type=kite.ORDER_TYPE_MARKET,
+                                     stoploss=stoploss,
+                                     validity=kite.VALIDITY_DAY,
+                                     variety=kite.VARIETY_REGULAR)
+
+def kite_market_sell(symbol, quantity, stoploss):
+    buy_order_id = kite.place_order(exchange=kite.EXCHANGE_NSE,
+                                     tradingsymbol=symbol,
+                                     transaction_type=kite.TRANSACTION_TYPE_SELL,
+                                     quantity=quantity,
+                                     product=kite.PRODUCT_MIS,
+                                     order_type=kite.ORDER_TYPE_MARKET,
+                                     stoploss=stoploss,
+                                     validity=kite.VALIDITY_DAY,
+                                     variety=kite.VARIETY_REGULAR)
 
 def cancel_order(orderid):
     kite.cancel_order(
@@ -40,7 +61,7 @@ def cancel_order(orderid):
 
 # fetch all orders
 kite.orders()
-
+kite.profile()
 # get list of positions
 kite.positions()
 
