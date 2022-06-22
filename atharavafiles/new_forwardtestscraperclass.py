@@ -37,7 +37,8 @@ class ForwardTest(Thread):
 			"TATASTEEL": 0.5850011395166405,
 			"BAJFINANCE": 0.598080106955147,
 			"TATAMOTORS": 0.6552967288547805,
-			"INFY": 0.5342662493071376
+			"INFY": 0.5342662493071376,
+			"ASIANPAINT": 0.3757896383910965
 		}
 
 		prices_and_volume = getPricesandVolume(self.stock_code, self.duration)
