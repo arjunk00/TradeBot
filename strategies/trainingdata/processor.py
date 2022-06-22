@@ -1,12 +1,14 @@
 import csv
 import pandas as pd
 
-df = pd.read_csv('strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE.csv')
-df.bfill(axis='rows',inplace=True)
-df.to_csv('strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE.csv',index=False)
+stock_code = "ADANIPORTS"
 
-rawfile = open(r"strategies\\trainingdata\\converged\\ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv","r")
-processedfile = open(r"strategies\\trainingdata\\processed\\ADANIPORTS__EQ__NSE__NSE__5MINUTE_TRAINING.csv","w",newline='')
+df = pd.read_csv('strategies\\trainingdata\\raw\\{}__EQ__NSE__NSE__MINUTE.csv'.format(stock_code))
+df.bfill(axis='rows',inplace=True)
+df.to_csv('strategies\\trainingdata\\raw\\{}__EQ__NSE__NSE__MINUTE.csv'.format(stock_code),index=False)
+
+rawfile = open("strategies\\trainingdata\\converged\\{}__EQ__NSE__NSE__5MINUTE_CONVERGED.csv".format(stock_code),"r")
+processedfile = open("strategies\\trainingdata\\processed\\{}__EQ__NSE__NSE__5MINUTE_TRAINING.csv".format(stock_code),"w",newline='')
 csvreader = csv.reader(rawfile)
 csvwriter = csv.writer(processedfile)
 

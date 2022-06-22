@@ -1,6 +1,6 @@
-import sys
+import sys, os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../")
 
-sys.path.insert(0, '../tools')
 import csv
 import pandas as pd
 # from stockfunctions import converger
@@ -20,14 +20,15 @@ def converger(listofrows): #converge n DOHLCV rows into one
 
     return [D,O,H,L,C,V]
 
+stock_code = "ADANIPORTS"
 
-df = pd.read_csv('strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE.csv')
+df = pd.read_csv('strategies\\trainingdata\\raw\\{}__EQ__NSE__NSE__MINUTE.csv'.format(stock_code))
 df.bfill(axis='rows',inplace=True)
-df.to_csv('strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE.csv',index=False)
+df.to_csv('strategies\\trainingdata\\raw\\{}__EQ__NSE__NSE__MINUTE.csv'.format(stock_code),index=False)
 
 n = 5
-rawfile = open(r"strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE.csv","r")
-processedfile = open("strategies\\trainingdata\\converged\\ADANIPORTS__EQ__NSE__NSE__{}MINUTE_CONVERGED.csv".format(str(n)),"w",newline='')
+rawfile = open("strategies\\trainingdata\\raw\\{}__EQ__NSE__NSE__MINUTE.csv".format(stock_code),"r")
+processedfile = open("strategies\\trainingdata\\converged\\{}__EQ__NSE__NSE__{}MINUTE_CONVERGED.csv".format(stock_code,str(n)),"w",newline='')
 csvreader = csv.reader(rawfile)
 csvwriter = csv.writer(processedfile)
 

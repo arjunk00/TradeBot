@@ -10,7 +10,7 @@ def makepickle(obj,picklename):
     outfile.close()
 
 stock_code = "ADANIPORTS"
-trainingdatafile = open(r"strategies\\trainingdata\\processed\\ADANIPORTS__EQ__NSE__NSE__5MINUTE_TRAINING.csv","r")
+trainingdatafile = open("strategies\\trainingdata\\processed\\{}__EQ__NSE__NSE__5MINUTE_TRAINING.csv".format(stock_code),"r")
 csvreader = csv.reader(trainingdatafile)
 next(csvreader)
 Xlst = []
@@ -32,6 +32,6 @@ X = np.array(Xlst)
 y = np.array(ylst)
 adanidoublelogit = md.DoubleLogit(stock_code)
 adanidoublelogit.train(X,y)
-makepickle(adanidoublelogit,'DOUBLELOGIT_5MIN_TRAINED_ADANIPORTS')
+makepickle(adanidoublelogit,'DOUBLELOGIT_5MIN_TRAINED_{}'.format(stock_code))
 trainingdatafile.close()
 
