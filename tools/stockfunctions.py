@@ -96,7 +96,7 @@ def createsignaltable(stock_code, cursor):
 
 
 def converger(listofrows): #converge n DOHLCV rows into one
-    D = listofrows[-1][0]
+    D = listofrows[0][0]
     O = listofrows[0][1]
     C = listofrows[-1][-2]
     Lh = []
