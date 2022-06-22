@@ -1,4 +1,4 @@
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, LinearRegression
 import numpy as np
 
 class DoubleLogit:
@@ -12,7 +12,7 @@ class DoubleLogit:
         Xsell = []
         ysell = []
         for row, output in zip(X,y):
-            if row[1]>=row[-2]:
+            if row[0]>=row[3]:
                 Xbuy.append(row)
                 ybuy.append(output)
             else:
@@ -22,6 +22,8 @@ class DoubleLogit:
         ybuyarr = np.array(ybuy)
         Xsellarr = np.array(Xsell)
         ysellarr = np.array(ysell)
+        print(Xsellarr.shape)
+        print(ysellarr.shape)
         self.logitbuy.fit(Xbuyarr,ybuyarr)
         self.logitsell.fit(Xsellarr,ysellarr)
         print("Training complete")

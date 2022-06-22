@@ -2,11 +2,11 @@ import csv
 import pandas as pd
 
 df = pd.read_csv('strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE.csv')
-df.bfill(axis='columns')
-df.to_csv('strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE_filled.csv',index=False)
+df.bfill(axis='rows',inplace=True)
+df.to_csv('strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE.csv',index=False)
 
-rawfile = open(r"strategies\\trainingdata\\raw\\ADANIPORTS__EQ__NSE__NSE__MINUTE.csv","r")
-processedfile = open(r"strategies\\trainingdata\\processed\\ADANIPORTS__EQ__NSE__NSE__MINUTE_TRAINING.csv","w",newline='')
+rawfile = open(r"strategies\\trainingdata\\converged\\ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv","r")
+processedfile = open(r"strategies\\trainingdata\\processed\\ADANIPORTS__EQ__NSE__NSE__5MINUTE_TRAINING.csv","w",newline='')
 csvreader = csv.reader(rawfile)
 csvwriter = csv.writer(processedfile)
 

@@ -1,3 +1,4 @@
+from asyncio.constants import LOG_THRESHOLD_FOR_CONNLOST_WRITES
 from nsetools import Nse
 from nsepy import get_history
 from datetime import date
@@ -92,6 +93,23 @@ def createsignaltable(stock_code, cursor):
     create_qry = "create table if not exists {}(Date TEXT,Time TEXT,Open REAL,High REAL,Low REAL,Close REAL,Signal CHARACTER(1),Price REAL,alpha REAL);".format(
         stock_code)
     cursor.execute(create_qry)
+
+
+def converger(listofrows): #converge n DOHLCV rows into one
+    D = listofrows[-1][0]
+    O = listofrows[0][1]
+    C = listofrows[-1][-2]
+    Lh = []
+    Ll = []
+    V = 0
+    for row in listofrows:
+        Lh.append(float(row[2]))
+        Ll.append(float(row[3]))
+        V += float(row[-1])
+    H = max(Lh)
+    L = min(Ll)
+
+    return [D,O,H,L,C,V]
 
 # print(yearlyreturn(15,datetime.timedelta(days=90)))
 
