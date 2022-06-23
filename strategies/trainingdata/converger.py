@@ -42,6 +42,6 @@ for row in csvreader:
         convrow = converger(rowlst)
         csvwriter.writerow(convrow)
         rowlst = [row]
-
+    
 rawfile.close()
 processedfile.close()
