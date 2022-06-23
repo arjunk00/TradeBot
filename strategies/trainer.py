@@ -35,3 +35,4 @@ adanidoublelogit.train(X,y)
 makepickle(adanidoublelogit,'DOUBLELOGIT_5MIN_TRAINED_{}'.format(stock_code))
 trainingdatafile.close()
 
+print(adanidoublelogit.predict(np.array([[268.15,269.4,267.75,269.4,30605.0]])))

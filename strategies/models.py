@@ -28,7 +28,7 @@ class DoubleLogit:
         self.logitsell.fit(Xsellarr,ysellarr)
         print("Training complete")
     def predict(self,X):
-        if X[0]>=X[-2]:
+        if X[0][0]>=X[0][-2]:
             return self.logitbuy.predict(X)
         else:
             return self.logitsell.predict(X)
