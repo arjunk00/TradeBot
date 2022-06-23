@@ -80,8 +80,8 @@ class BackTest:
                         date_time = row[0]
 
                 tuplelist = (
-                    str(date_time),
-                    str(date_time   ),
+                    str(date_time)[0:10],
+                    str(date_time)[11:19],
                     prices_and_volume[0],
                     prices_and_volume[1],
                     prices_and_volume[2],
