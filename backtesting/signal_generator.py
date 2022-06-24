@@ -11,7 +11,7 @@ import datetime as dt
 import numpy as np
 import csv
 import sqlite3
-from pickleextract_backtest import regobj
+from pickleextract_backtest import log_reg_obj
 
 
 
@@ -57,8 +57,8 @@ class BackTest:
 
                 prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
                 # prices_and_volume_arr = prices_and_volume_arr.astype(np.float64)
-                linregobj = regobj(self.stock_code)
-                up_prob = linregobj.predict(prices_and_volume_arr)[0][0]
+                logregobj = log_reg_obj(self.stock_code)
+                up_prob = logregobj.predict(prices_and_volume_arr)[0]
 
                 if up_prob > threshold_dict[self.stock_code]:
                     if prices_and_volume[0] > prices_and_volume[3]:
