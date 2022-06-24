@@ -36,4 +36,4 @@ adanidoublelogit.train(X,y)
 makepickle(adanidoublelogit,f'DOUBLELOGIT_5MIN_TRAINED_{stock_code}')
 trainingdatafile.close()
 
-print(adanidoublelogit.predict(np.array([[268.15,269.4,267.75,269.4,30605.0]])))
+print(adanidoublelogit.predict_proba(np.array([[268.15,269.4,267.75,269.4,30605.0]])))

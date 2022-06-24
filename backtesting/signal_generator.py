@@ -22,10 +22,13 @@ class BackTest:
         self.stock_code = stock_code
 
     def run(self):
-        conn = sqlite3.connect(f"{PROJECT_ROOT_DIR}/backtesting/trial.db")
-        cursor = conn.cursor()
-        createsignaltable(self.stock_code, cursor)
-        conn.commit()
+        # conn = sqlite3.connect(f"{PROJECT_ROOT_DIR}/backtesting/trial.db")
+        # cursor = conn.cursor()
+        # createsignaltable(self.stock_code, cursor)
+        # conn.commit()
+        signalcsvfile = open("backtest\trailsignal.csv","w",newline='')
+        csvwriter = csv.writer(signalcsvfile)
+
         threshold_dict = {
             "DRREDDY": 0.41713667119195574,
             "HINDUNILVR": 0.4300811185876499,
@@ -43,55 +46,58 @@ class BackTest:
 
         # prices_and_volume = getPricesandVolume(self.stock_code, self.duration)
 
-        with open('ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r') as testfile:
-            datareader = csv.reader(testfile)
-            for row in datareader:
-                prices_and_volume = row[1:]
-                # print(prices_and_volume)
-                prices_and_volume = [float(x) for x in prices_and_volume]
+        testfile =  open('backtesting\ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
+        datareader = csv.reader(testfile)
+        for row in datareader:
+            prices_and_volume = row[1:]
+            # print(prices_and_volume)
+            prices_and_volume = [float(x) for x in prices_and_volume]
 
-                print(prices_and_volume)
+            print(prices_and_volume)
 
-                if prices_and_volume is None:
-                    pass
+            if prices_and_volume is None:
+                pass
 
-                prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
-                # prices_and_volume_arr = prices_and_volume_arr.astype(np.float64)
-                logregobj = log_reg_obj(self.stock_code)
-                up_prob = logregobj.predict(prices_and_volume_arr)[0]
+            prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
+            # prices_and_volume_arr = prices_and_volume_arr.astype(np.float64)
+            logregobj = log_reg_obj(self.stock_code)
+            up_prob = logregobj.predict_proba(prices_and_volume_arr)[0][1]
 
-                if up_prob > threshold_dict[self.stock_code]:
-                    if prices_and_volume[0] > prices_and_volume[3]:
-                        print("B")
-                        signal = "B"
-                        date_time = row[0]
-                    else:
-                        print("H")
-                        signal = None
-                        date_time = row[0]
+            if up_prob > threshold_dict[self.stock_code]:
+                if prices_and_volume[0] > prices_and_volume[3]:
+                    print("B")
+                    signal = "B"
+                    date_time = row[0]
                 else:
-                    if prices_and_volume[0] > prices_and_volume[3]:
-                        print("H")
-                        signal = None
-                        date_time = row[0]
-                    else:
-                        print("S")
-                        signal = "S"
-                        date_time = row[0]
+                    print("H")
+                    signal = None
+                    date_time = row[0]
+            else:
+                if prices_and_volume[0] > prices_and_volume[3]:
+                    print("H")
+                    signal = None
+                    date_time = row[0]
+                else:
+                    print("S")
+                    signal = "S"
+                    date_time = row[0]
 
-                tuplelist = (
-                    str(date_time)[0:10],
-                    str(date_time)[11:19],
-                    prices_and_volume[0],
-                    prices_and_volume[1],
-                    prices_and_volume[2],
-                    prices_and_volume[3],
-                    signal,
-                    prices_and_volume[3],
-                    up_prob
-                )
-                store(self.stock_code, tuplelist, cursor)
-                print(self.stock_code, tuplelist)
-                conn.commit()
+            row = [
+                str(date_time)[0:10],
+                str(date_time)[11:19],
+                prices_and_volume[0],
+                prices_and_volume[1],
+                prices_and_volume[2],
+                prices_and_volume[3],
+                signal,
+                prices_and_volume[3],
+                up_prob
+            ]
 
+            csvwriter.writerow(row)
+            # store(self.stock_code, tuplelist, cursor)
+            print(self.stock_code, row)
+            # conn.commit()
+        signalcsvfile.close()
+        testfile.close()
 

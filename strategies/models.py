@@ -32,7 +32,11 @@ class DoubleLogit:
             return self.logitbuy.predict(X)
         else:
             return self.logitsell.predict(X)
-            
+    def predict_proba(self,X):
+        if X[0][0]>=X[0][-2]:
+            return self.logitbuy.predict_proba(X)
+        else:
+            return self.logitsell.predict_proba(X)
 
                 
 
