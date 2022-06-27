@@ -125,8 +125,8 @@ class TradeEngine:
         self.csvwriter.writerow(row)
     
     def daychange(self):
-        self.funds += self.margin[self.current_datetime.date()-timedelta(days=2)] #-deductable()
-        del self.margin[self.current_datetime.date()-timedelta(days=2)]
+        self.funds += list(self.margin.values())[0] #-deductable()
+        del self.margin[list(self.margin.keys())[0]]
         self.margin[self.current_datetime.date()] = 0
     
     def setdatetime(self,date,time):

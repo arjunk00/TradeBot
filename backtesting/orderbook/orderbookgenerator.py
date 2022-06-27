@@ -17,10 +17,11 @@ class OrderBook:
     def run(self):
         engine = self.engine
         for row in self.csvreader:
-            # lastdate = engine.current_datetime.date()
+            lastdate = engine.current_datetime.date()
             engine.setdatetime(row[0],row[1])
-            # curdate = engine.current_datetime.date()
-            # if lastdate
+            curdate = engine.current_datetime.date()
+            if lastdate != curdate:
+                engine.daychange()
             if row[-3] == 'B':
                 if engine.qty == 0:
                     engine.buy(float(row[-2]),'max')
