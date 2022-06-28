@@ -26,13 +26,13 @@ class BackTest:
         # cursor = conn.cursor()
         # createsignaltable(self.stock_code, cursor)
         # conn.commit()
-        signalcsvfile = open("backtest\trailsignal.csv","w",newline='')
+        signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/trailsignal.csv","w",newline='')
         csvwriter = csv.writer(signalcsvfile)
-
+#0.6423560850684784
         threshold_dict = {
             "DRREDDY": 0.41713667119195574,
             "HINDUNILVR": 0.4300811185876499,
-            "ADANIPORTS": 0.6423560850684784,
+            "ADANIPORTS": 0.5,
             "AXISBANK": 0.4525515696307913,
             "APOLLOHOSP": 0.6086177020679596,
             "BHARTIARTL": 0.4082868996895255,
@@ -46,7 +46,7 @@ class BackTest:
 
         # prices_and_volume = getPricesandVolume(self.stock_code, self.duration)
 
-        testfile =  open('backtesting\ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
+        testfile =  open(f'{os.path.dirname(os.path.realpath(__file__))}/ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
         datareader = csv.reader(testfile)
         for row in datareader:
             prices_and_volume = row[1:]
