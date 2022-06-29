@@ -119,7 +119,7 @@ class TradeEngine:
         row = [
             self.stock_code,
             self.current_datetime,
-            'S',
+            'B',
             qty,
             price,
             self.funds,
