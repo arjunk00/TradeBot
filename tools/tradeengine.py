@@ -15,11 +15,13 @@ class TradeEngine:
     def buy(self,price,qty):
         leveraged_price = price/self.leverage
         max_qty = self.funds//leveraged_price
+        print(leveraged_price,max_qty)
         if qty == 'max':
             qty = max_qty
-        elif qty > max_qty:
+        if qty > max_qty:
             raise Exception("Not enough funds to buy")
-        
+        if leveraged_price*qty > self.funds or leveraged_price*qty <= 0:
+            raise Exception("Out of funds")
         self.blockedmargin += leveraged_price*qty
         self.funds -= self.blockedmargin
         self.qty += qty
@@ -41,9 +43,10 @@ class TradeEngine:
         max_qty = self.funds//leveraged_price
         if qty == 'max':
             qty = max_qty
-        elif qty > max_qty:
+        if qty > max_qty:
             raise Exception("Not enough funds to buy")
-
+        if leveraged_price*qty > self.funds or leveraged_price*qty <= 0:
+            raise Exception("Out of funds")
         self.blockedmargin = leveraged_price*qty
         self.funds -= self.blockedmargin
         self.qty -= qty
@@ -138,9 +141,11 @@ class TradeEngine:
 
 
     
-    
-        
-        
+# outfile = open('trailorderbook.csv','w',newline='')
+# obj = TradeEngine('ADANIPORTS',10,outfile)
+# obj.short(10,'max')
+# obj.short(10,'max')
+# obj.short(10,'max')
         
         
         
