@@ -1,5 +1,7 @@
 from datetime import datetime as dt, timedelta
 import csv
+import pandas as pd
+from tools.brokerage_calc import brokerage_deductions
 
 class TradeEngine:
     def __init__(self,stock_code,initial_capital,outfile):
@@ -11,11 +13,11 @@ class TradeEngine:
         self.leverage = 5
         self.current_datetime = dt.now() #update at every row
         self.csvwriter = csv.writer(outfile)
+        self.daytradesdataframe = pd.DataFrame({'symbol':[],'datetime':[],'order':[],'quantity':[],'price':[]})
     
     def buy(self,price,qty):
         leveraged_price = price/self.leverage
         max_qty = self.funds//leveraged_price
-        print(leveraged_price,max_qty)
         if qty == 'max':
             qty = max_qty
         if qty > max_qty:
@@ -37,6 +39,8 @@ class TradeEngine:
             None
         ]
         self.csvwriter.writerow(row)
+        df = self.daytradesdataframe
+        df.loc[len(df.index)] = row[:5]
 
     def short(self,price,qty):
         leveraged_price = price/self.leverage
@@ -62,6 +66,8 @@ class TradeEngine:
             None
         ]
         self.csvwriter.writerow(row)
+        df = self.daytradesdataframe
+        df.loc[len(df.index)] = row[:5]
 
     def sell(self,price,qty):
         max_qty = self.qty
@@ -94,6 +100,8 @@ class TradeEngine:
             totalcapital
         ]
         self.csvwriter.writerow(row)
+        df = self.daytradesdataframe
+        df.loc[len(df.index)] = row[:5]
 
     def squareoff(self,price,qty):
         max_qty = -self.qty
@@ -126,11 +134,15 @@ class TradeEngine:
             totalcapital
         ]
         self.csvwriter.writerow(row)
+        df = self.daytradesdataframe
+        df.loc[len(df.index)] = row[:5]
     
     def daychange(self):
-        self.funds += list(self.margin.values())[0] #-deductable()
+        # print(brokerage_deductions(self.daytradesdataframe)['deduction'])
+        self.funds += list(self.margin.values())[0] - brokerage_deductions(self.daytradesdataframe)['deduction']
         del self.margin[list(self.margin.keys())[0]]
         self.margin[self.current_datetime.date()] = 0
+        self.daytradesdataframe = pd.DataFrame({'symbol':[],'datetime':[],'order':[],'quantity':[],'price':[]})
     
     def setdatetime(self,date,time):
         date_time = date+time

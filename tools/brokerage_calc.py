@@ -34,42 +34,41 @@ def stamp_charges(first_order_value):
     return stamp
 
 
-def brokerage_deductions():
+def brokerage_deductions(daytradesdf):
     total_deduction, total_brokerage = 0, 0
-    df = pd.read_csv("orderbooktest.csv")
+    df = daytradesdf
+    print(df)
     for i in range(0, len(df.index), 2):
         first_order = df.iloc[i].values
         last_order = df.iloc[i + 1].values
-        first_order_value = first_order[4] * first_order[5]
-        last_order_value = last_order[4] * last_order[5]
-        buy_price = first_order[5]
-        sell_price = last_order[5]
-        buyqty = first_order[4]
-        sellqty = last_order[4]
+        first_order_value = first_order[3] * first_order[4]
+        last_order_value = last_order[3] * last_order[4]
+        buy_price = first_order[4]
+        sell_price = last_order[4]
+        buyqty = first_order[3]
+        sellqty = last_order[3]
         turnover = first_order_value + last_order_value
 
         brokerage_till_now = brokerage(buy_price, buyqty) + brokerage(sell_price, sellqty)
-        print(brokerage_till_now)
-        print(stt(turnover, buyqty, sellqty))
-        print(transaction_charge(turnover))
-        print(gst(
-            brokerage_till_now, transaction_charge(turnover)))
-        print(sebi_charges(turnover))
-        print(stamp_charges(first_order_value))
+        # print(brokerage_till_now)
+        # print(stt(turnover, buyqty, sellqty))
+        # print(transaction_charge(turnover))
+        # print(gst(
+        #     brokerage_till_now, transaction_charge(turnover)))
+        # print(sebi_charges(turnover))
+        # print(stamp_charges(first_order_value))
         total_brokerage += brokerage_till_now
 
-        if first_order[3] == 'B':
+        if first_order[2] == 'B':
             deduction = stt(turnover, buyqty, sellqty) + brokerage_till_now + transaction_charge(turnover) + gst(
                 brokerage_till_now, transaction_charge(turnover)) + sebi_charges(turnover) + stamp_charges(
                 first_order_value)
             total_deduction += deduction
-        elif first_order[3] == 'S':
+        elif first_order[2] == 'S':
             deduction = brokerage_till_now + transaction_charge(turnover) + gst(
                 brokerage_till_now, transaction_charge(turnover)) + sebi_charges(turnover)
             total_deduction += deduction
+    
+    return {'brokerage': total_brokerage,'deduction': total_deduction}
+    
 
-    print(f'brokerage: {total_brokerage}')
-    print(f'deduction: {total_deduction}')
-
-
-brokerage_deductions()
