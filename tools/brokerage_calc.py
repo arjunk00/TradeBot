@@ -1,8 +1,3 @@
-import csv
-import pandas as pd
-import os
-
-
 def stt(turnover, buyqty, sellqty):
     avgprice = turnover / (buyqty + sellqty)
     stt = avgprice * sellqty * 0.00025
@@ -37,6 +32,10 @@ def stamp_charges(first_order_value):
 def brokerage_deductions(daytradesdf):
     total_deduction, total_brokerage = 0, 0
     df = daytradesdf
+    # if(len(df.index)%2!=0):
+    #     df = df.head(-1)
+    # else:
+    #     df = daytradesdf
     print(df)
     for i in range(0, len(df.index), 2):
         first_order = df.iloc[i].values
@@ -68,7 +67,5 @@ def brokerage_deductions(daytradesdf):
             deduction = brokerage_till_now + transaction_charge(turnover) + gst(
                 brokerage_till_now, transaction_charge(turnover)) + sebi_charges(turnover)
             total_deduction += deduction
-    
-    return {'brokerage': total_brokerage,'deduction': total_deduction}
-    
 
+    return {'brokerage': total_brokerage, 'deduction': total_deduction}
