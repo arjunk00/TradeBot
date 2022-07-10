@@ -137,6 +137,12 @@ class TradeEngine:
         df = self.daytradesdataframe
         df.loc[len(df.index)] = row[:5]
     
+    def posexit(self,price):
+        if self.qty > 0:
+            self.sell(price,'max')
+        elif self.qty < 0:
+            self.squareoff(price,'max')
+    
     def daychange(self):
         # print(brokerage_deductions(self.daytradesdataframe)['deduction'])
         self.funds += list(self.margin.values())[0] - brokerage_deductions(self.daytradesdataframe)['deduction']

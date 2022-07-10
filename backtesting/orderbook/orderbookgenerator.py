@@ -5,6 +5,7 @@ print(PROJECT_ROOT_DIR)
 
 from tools.tradeengine import TradeEngine
 import csv
+import datetime as dt
 
 class OrderBook:
     def __init__(self,stock_code):
@@ -22,6 +23,9 @@ class OrderBook:
             lastdate = engine.current_datetime.date()
             engine.setdatetime(row[0],row[1])
             curdate = engine.current_datetime.date()
+            if engine.current_datetime.time() >= dt.time(15,15):
+                engine.posexit(float(row[-2]))
+                continue
             if lastdate != curdate:
                 engine.daychange()
             if row[-3] == 'B':
