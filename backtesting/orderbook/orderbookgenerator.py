@@ -18,7 +18,6 @@ class OrderBook:
 
     def run(self):
         engine = self.engine
-        print('hi')
         for row in self.csvreader:
             lastdate = engine.current_datetime.date()
             engine.setdatetime(row[0],row[1])
@@ -41,7 +40,22 @@ class OrderBook:
                     engine.sell(float(row[-2]),'max')
                     engine.short(float(row[-2]),'max')
              
-                
+
+class DollarCostAvg:
+    def __init__(self,stock_code):
+        self.stock_code = stock_code
+        self.infile = open(f'{os.path.dirname(os.path.realpath(__file__))}/trailsignal.csv','r')
+        self.outfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/trailorderbook.csv','w',newline='')
+        self.csvreader = csv.reader(self.infile)
+        self.engine = TradeEngine(stock_code,10000,self.outfile)
+    
+    def run(self):
+        engine = self.engine
+        for row in self.csvreader:
+
+
+
+
 # order = OrderBook('ADANIPORTS')
 # order.run()
 
