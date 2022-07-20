@@ -145,7 +145,7 @@ class TradeEngine:
     
     def daychange(self):
         # print(brokerage_deductions(self.daytradesdataframe)['deduction'])
-        self.funds += list(self.margin.values())[0] - brokerage_deductions(self.daytradesdataframe)['deduction']
+        self.funds += list(self.margin.values())[0]# - brokerage_deductions(self.daytradesdataframe)['deduction']
         del self.margin[list(self.margin.keys())[0]]
         self.margin[self.current_datetime.date()] = 0
         self.daytradesdataframe = pd.DataFrame({'symbol':[],'datetime':[],'order':[],'quantity':[],'price':[]})

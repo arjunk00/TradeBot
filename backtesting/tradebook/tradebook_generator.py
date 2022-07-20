@@ -8,9 +8,9 @@ import csv
 import os
 
 
-def tradebook_generator():
+def tradebook_generator(filename):
     leverage = 5
-    df = pd.read_csv(f"{os.path.dirname(os.path.realpath(__file__))}/../orderbook/orderbooktest.csv")
+    df = pd.read_csv(f"{os.path.dirname(os.path.realpath(__file__))}/../orderbook/{filename}.csv", header = None)
     profit_and_loss = []
     entry_time = []
     entry_price = []
@@ -23,13 +23,13 @@ def tradebook_generator():
     for i in range(0, len(df.index), 2):
         entry_trade = df.iloc[i].values
         exit_trade = df.iloc[i + 1].values
-        quantity.append(entry_trade[4])
-        entry_time.append(f'{entry_trade[1]} {entry_trade[2]}')
-        entry_price.append(entry_trade[-1])
-        entry_type.append(entry_trade[3])
-        exit_time.append(f'{exit_trade[1]} {exit_trade[2]}')
-        exit_price.append(exit_trade[-1])
-        exit_type.append(exit_trade[-3])
+        quantity.append(entry_trade[3])
+        entry_time.append(f'{entry_trade[1]}')
+        entry_price.append(entry_trade[4])
+        entry_type.append(entry_trade[2])
+        exit_time.append(f'{exit_trade[1]}')
+        exit_price.append(exit_trade[4])
+        exit_type.append(exit_trade[2])
         if entry_type == 'B':
             profit_and_loss.append((exit_price[-1] - entry_price[-1]) * quantity[-1])
         else:
@@ -52,4 +52,4 @@ def tradebook_generator():
         tradebook_df.to_csv('tradebooktest.csv')
 
 
-tradebook_generator()
+# tradebook_generator()

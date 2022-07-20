@@ -10,8 +10,8 @@ import datetime as dt
 class OrderBook:
     def __init__(self,stock_code):
         self.stock_code = stock_code
-        self.infile = open(f'{os.path.dirname(os.path.realpath(__file__))}/trailsignal.csv','r')
-        self.outfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/trailorderbook.csv','w',newline='')
+        self.infile = open(f'{os.path.dirname(os.path.realpath(__file__))}/../adanisignal.csv','r')
+        self.outfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/adaniorderbook.csv','w',newline='')
         self.csvreader = csv.reader(self.infile)
         self.engine = TradeEngine(stock_code,10000,self.outfile)
 
@@ -42,8 +42,8 @@ class OrderBook:
                     engine.short(float(row[-2]),'max')
              
                 
-order = OrderBook('ADANIPORTS')
-order.run()
+# order = OrderBook('ADANIPORTS')
+# order.run()
 
 
         

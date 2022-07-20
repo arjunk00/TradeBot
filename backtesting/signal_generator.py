@@ -11,7 +11,7 @@ import datetime as dt
 import numpy as np
 import csv
 import sqlite3
-from pickleextract_backtest import log_reg_obj
+from pickleextract_backtest import log_reg_obj, regobj
 
 
 
@@ -26,13 +26,13 @@ class BackTest:
         # cursor = conn.cursor()
         # createsignaltable(self.stock_code, cursor)
         # conn.commit()
-        signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/trailsignal.csv","w",newline='')
+        signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/adanisignal.csv","w",newline='')
         csvwriter = csv.writer(signalcsvfile)
 #0.6423560850684784
         threshold_dict = {
             "DRREDDY": 0.41713667119195574,
             "HINDUNILVR": 0.4300811185876499,
-            "ADANIPORTS": 0.5,
+            "ADANIPORTS": 0.6423560850684784,
             "AXISBANK": 0.4525515696307913,
             "APOLLOHOSP": 0.6086177020679596,
             "BHARTIARTL": 0.4082868996895255,
@@ -60,8 +60,10 @@ class BackTest:
 
             prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
             # prices_and_volume_arr = prices_and_volume_arr.astype(np.float64)
-            logregobj = log_reg_obj(self.stock_code)
-            up_prob = logregobj.predict_proba(prices_and_volume_arr)[0][1]
+            linregobj = regobj(self.stock_code)
+            # up_prob = linregobj.predict_proba(prices_and_volume_arr)[0][1]
+            up_prob = linregobj.predict(prices_and_volume_arr)[0][0]
+
 
             if up_prob > threshold_dict[self.stock_code]:
                 if prices_and_volume[0] > prices_and_volume[3]:
