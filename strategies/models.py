@@ -1,6 +1,6 @@
 from sklearn.linear_model import LogisticRegression, LinearRegression
 import numpy as np
-
+from tools.stockfunctions import marubozu
 class DoubleLogit:
     def __init__(self,name):
         self.name = name
@@ -39,6 +39,16 @@ class DoubleLogit:
             return self.logitsell.predict_proba(X)
 
                 
+class Marubozu:
+    def __init__(self, stock_code):
+        self.stock_code = stock_code
 
-
-
+    def predict(self, X):
+        # X = ['o','h','l','c']
+        output = marubozu(self.stock_code, X)
+        if(output['bull']==True):
+            return 1
+        elif(output['bull']==False):
+            return 0
+        else:
+            return 0.5

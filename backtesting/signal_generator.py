@@ -12,6 +12,7 @@ import numpy as np
 import csv
 import sqlite3
 from pickleextract_backtest import log_reg_obj, regobj
+from strategies.models import Marubozu
 
 
 
@@ -26,7 +27,7 @@ class BackTest:
         # cursor = conn.cursor()
         # createsignaltable(self.stock_code, cursor)
         # conn.commit()
-        signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/output/signals/{self.stock_code}signal.csv","w",newline='')
+        signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/output/signals/{self.stock_code}marubozusignal.csv","w",newline='')
         csvwriter = csv.writer(signalcsvfile)
 #0.6423560850684784
         threshold_dict = {
@@ -61,29 +62,44 @@ class BackTest:
 
             prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
             # prices_and_volume_arr = prices_and_volume_arr.astype(np.float64)
-            linregobj = regobj(self.stock_code)
+            # linregobj = regobj(self.stock_code)
+            marubozuobj = Marubozu(self.stock_code)
             # up_prob = linregobj.predict_proba(prices_and_volume_arr)[0][1]
-            up_prob = linregobj.predict(prices_and_volume_arr)[0][0]
+            # up_prob = linregobj.predict(prices_and_volume_arr)[0][0]
+            up_prob = marubozuobj.predict(prices_and_volume_arr[0])
 
 
-            if up_prob > threshold_dict[self.stock_code]:
-                if prices_and_volume[0] > prices_and_volume[3]:
-                    print("B")
-                    signal = "B"
-                    date_time = row[0]
-                else:
-                    print("H")
-                    signal = None
-                    date_time = row[0]
+            # if up_prob > threshold_dict[self.stock_code]:
+            #     if prices_and_volume[0] > prices_and_volume[3]:
+            #         print("B")
+            #         signal = "B"
+            #         date_time = row[0]
+            #     else:
+            #         print("H")
+            #         signal = None
+            #         date_time = row[0]
+            # else:
+            #     if prices_and_volume[0] > prices_and_volume[3]:
+            #         print("H")
+            #         signal = None
+            #         date_time = row[0]
+            #     else:
+            #         print("S")
+            #         signal = "S"
+            #         date_time = row[0]
+
+            if up_prob > 0.5:
+                print("B")
+                signal = "B"
+                date_time = row[0]
+            elif up_prob < 0.5:
+                print("S")
+                signal = "S"
+                date_time = row[0]
             else:
-                if prices_and_volume[0] > prices_and_volume[3]:
-                    print("H")
-                    signal = None
-                    date_time = row[0]
-                else:
-                    print("S")
-                    signal = "S"
-                    date_time = row[0]
+                print("H")
+                signal = None
+                date_time = row[0]
 
             row = [
                 str(date_time)[0:10],
