@@ -10,7 +10,7 @@ import os
 
 def tradebook_generator(filename):
     leverage = 5
-    df = pd.read_csv(f"{os.path.dirname(os.path.realpath(__file__))}/../orderbook/{filename}.csv", header = None)
+    df = pd.read_csv(f"{os.path.dirname(os.path.realpath(__file__))}/../output/orderbooks/{filename}.csv", header = None)
     profit_and_loss = []
     entry_time = []
     entry_price = []
@@ -49,7 +49,7 @@ def tradebook_generator(filename):
                           }
 
         tradebook_df = pd.DataFrame(tradebook_dict)
-        tradebook_df.to_csv('tradebooktest.csv')
+        tradebook_df.to_csv(f'{os.path.dirname(os.path.realpath(__file__))}/../output/tradebooks/{filename}tradebook.csv')
 
 
 # tradebook_generator()

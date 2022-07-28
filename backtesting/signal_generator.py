@@ -26,7 +26,7 @@ class BackTest:
         # cursor = conn.cursor()
         # createsignaltable(self.stock_code, cursor)
         # conn.commit()
-        signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/adanisignal.csv","w",newline='')
+        signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/output/signals/{self.stock_code}signal.csv","w",newline='')
         csvwriter = csv.writer(signalcsvfile)
 #0.6423560850684784
         threshold_dict = {
@@ -48,6 +48,7 @@ class BackTest:
 
         testfile =  open(f'{os.path.dirname(os.path.realpath(__file__))}/ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
         datareader = csv.reader(testfile)
+        for i in range(24650): next(datareader)
         for row in datareader:
             prices_and_volume = row[1:]
             # print(prices_and_volume)
