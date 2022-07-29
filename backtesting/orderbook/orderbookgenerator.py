@@ -10,8 +10,8 @@ import datetime as dt
 class OrderBook:
     def __init__(self,stock_code):
         self.stock_code = stock_code
-        self.infile = open(f'{os.path.dirname(os.path.realpath(__file__))}/../output/signals/{self.stock_code}marubozusignal.csv','r')
-        self.outfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/../output/orderbooks/{self.stock_code}marubozuorderbook.csv','w',newline='')
+        self.infile = open(f'{os.path.dirname(os.path.realpath(__file__))}/../output/signals/{self.stock_code}linregnewsignal.csv','r')
+        self.outfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/../output/orderbooks/{self.stock_code}linregneworderbook.csv','w',newline='')
         self.csvreader = csv.reader(self.infile)
         self.engine = TradeEngine(stock_code,10000,self.outfile)
 
