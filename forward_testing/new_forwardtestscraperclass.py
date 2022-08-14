@@ -9,7 +9,7 @@ import sqlite3
 import datetime as dt
 import numpy as np
 from threading import Thread
-from atharavafiles.pickleextract import regobj
+from forward_testing.pickleextract import regobj
 from tools.stockfunctions import createsignaltable, store
 from tools.new_webscraper import getPricesandVolume
 

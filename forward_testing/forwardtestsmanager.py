@@ -6,7 +6,7 @@ import datetime as dt
 import numpy as np
 
 import threading
-from atharavafiles.new_forwardtestscraperclass import ForwardTest
+from forward_testing.new_forwardtestscraperclass import ForwardTest
 
 class ForwardTestManager:
     def __init__(self, slots_count, duration, stocks: list[str], *, start_time_bias = 15, end_time_bias = 10):
