@@ -22,8 +22,8 @@ access_token = "mOScvzyOX2mSlt3bMSAXX7T2HA824Yoz"
 kite = KiteConnect(api_key=api_key)
 
 # These lines are to be commented and uncommented---------------- START ----------
-# print(kite.generate_session(request_token=input(f"Request Token: {kite.login_url()} = "), api_secret=api_secret)['access_token'])
-# sys.exit()
+print(kite.generate_session(request_token=input(f"Request Token: {kite.login_url()} = "), api_secret=api_secret)['access_token'])
+sys.exit()
 # Till Here ------------------------- END -------------------
 
 
