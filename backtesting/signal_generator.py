@@ -26,7 +26,7 @@ class SignalGenLinReg:
         
         signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/output/signals/{self.stock_code}linregnewsignal.csv","w",newline='')
         csvwriter = csv.writer(signalcsvfile)
-#0.6423560850684784
+#0.6423560850684784, 0.598080106955147
         threshold_dict = {
             "DRREDDY": 0.41713667119195574,
             "HINDUNILVR": 0.4300811185876499,
@@ -44,11 +44,16 @@ class SignalGenLinReg:
 
         # prices_and_volume = getPricesandVolume(self.stock_code, self.duration)
 
-        testfile =  open(f'{os.path.dirname(os.path.realpath(__file__))}/ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
+        testfile =  open(f'{os.path.dirname(os.path.realpath(__file__))}/{self.stock_code}__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
         datareader = csv.reader(testfile)
-        for i in range(24650): next(datareader)
+        next(datareader)
+        i=0
+        # for i in range(24650): next(datareader)
         for row in datareader:
-            prices_and_volume = row[1:]
+            i+=1
+            if(i==24650):
+                break
+            prices_and_volume = row[1:5]
             # print(prices_and_volume)
             prices_and_volume = [float(x) for x in prices_and_volume]
 

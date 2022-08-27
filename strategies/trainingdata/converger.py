@@ -20,15 +20,15 @@ def converger(listofrows): #converge n DOHLCV rows into one
 
     return [D,O,H,L,C,V]
 
-stock_code = "ADANIPORTS"
+stock_code = "BAJFINANCE"
 
-df = pd.read_csv('strategies\\trainingdata\\raw\\{}__EQ__NSE__NSE__MINUTE.csv'.format(stock_code))
+df = pd.read_csv(f'{os.path.dirname(os.path.realpath(__file__))}/raw/{stock_code}__EQ__NSE__NSE__MINUTE.csv')
 df.bfill(axis='rows',inplace=True)
-df.to_csv('strategies\\trainingdata\\raw\\{}__EQ__NSE__NSE__MINUTE.csv'.format(stock_code),index=False)
+df.to_csv(f'{os.path.dirname(os.path.realpath(__file__))}/raw/{stock_code}__EQ__NSE__NSE__MINUTE.csv',index=False)
 
 n = 5
-rawfile = open("strategies\\trainingdata\\raw\\{}__EQ__NSE__NSE__MINUTE.csv".format(stock_code),"r")
-processedfile = open("strategies\\trainingdata\\converged\\{}__EQ__NSE__NSE__{}MINUTE_CONVERGED.csv".format(stock_code,str(n)),"w",newline='')
+rawfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/raw/{stock_code}__EQ__NSE__NSE__MINUTE.csv","r")
+processedfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/converged/{stock_code}__EQ__NSE__NSE__{n}MINUTE_CONVERGED.csv","w",newline='')
 csvreader = csv.reader(rawfile)
 csvwriter = csv.writer(processedfile)
 

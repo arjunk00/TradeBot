@@ -9,7 +9,7 @@ def log_reg_obj(stock_code):
 
 
 def regobj(stock_code):
-  linregobj = pickle.load(open(f'{os.path.dirname(os.path.realpath(__file__))}/pickles/linear_regression_{stock_code}.pickle','rb'))
+  linregobj = pickle.load(open(f'{os.path.dirname(os.path.realpath(__file__))}/pickles/linear_regression {stock_code} final.pickle','rb'))
   return linregobj
 
 def makepickle(obj,picklename):
