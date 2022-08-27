@@ -44,15 +44,15 @@ class SignalGenLinReg:
 
         # prices_and_volume = getPricesandVolume(self.stock_code, self.duration)
 
-        testfile =  open(f'{os.path.dirname(os.path.realpath(__file__))}/{self.stock_code}__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
+        testfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/{self.stock_code}__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
         datareader = csv.reader(testfile)
         next(datareader)
         i=0
-        # for i in range(24650): next(datareader)
+        for i in range(24650): next(datareader)
         for row in datareader:
-            i+=1
-            if(i==24650):
-                break
+            # i+=1
+            # if(i==24650):
+            #     break
             prices_and_volume = row[1:5]
             # print(prices_and_volume)
             prices_and_volume = [float(x) for x in prices_and_volume]
@@ -67,40 +67,13 @@ class SignalGenLinReg:
             linregobj = regobj(self.stock_code)
 
             up_prob = linregobj.predict(prices_and_volume_arr)[0][0]
-            
-
-            if up_prob > threshold_dict[self.stock_code]:
-                if prices_and_volume[0] > prices_and_volume[3]:
-                    print("B")
-                    signal = "B"
-                    date_time = row[0]
-                else:
-                    print("H")
-                    signal = None
-                    date_time = row[0]
-            elif 1-up_prob > threshold_dict[self.stock_code]:
-                if prices_and_volume[0] > prices_and_volume[3]:
-                    print("H")
-                    signal = None
-                    date_time = row[0]
-                else:
-                    print("S")
-                    signal = "S"
-                    date_time = row[0]
-            else:
-                print("H")
-                signal = None
-                date_time = row[0]
-
 
             row = [
-                str(date_time)[0:10],
-                str(date_time)[11:19],
+                row[0][0:10],
+                row[0][11:19],
                 prices_and_volume[0],
                 prices_and_volume[1],
                 prices_and_volume[2],
-                prices_and_volume[3],
-                signal,
                 prices_and_volume[3],
                 up_prob
             ]
