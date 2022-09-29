@@ -53,7 +53,7 @@ class SignalGenLinReg:
             # i+=1
             # if(i==24650):
             #     break
-            prices_and_volume = row[1:5]
+            prices_and_volume = row[1:6]
             # print(prices_and_volume)
             prices_and_volume = [float(x) for x in prices_and_volume]
 
@@ -64,9 +64,9 @@ class SignalGenLinReg:
 
             prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
             # prices_and_volume_arr = prices_and_volume_arr.astype(np.float64)
-            linregobj = regobj(self.stock_code)
+            logregobj = log_reg_obj(self.stock_code)
 
-            up_prob = linregobj.predict(prices_and_volume_arr)[0][0]
+            up_prob = logregobj.predict(prices_and_volume_arr)[0]
 
             row = [
                 row[0][0:10],
