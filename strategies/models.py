@@ -1,6 +1,7 @@
 from sklearn.linear_model import LogisticRegression, LinearRegression
 import numpy as np
 from tools.stockfunctions import marubozu
+import random
 class DoubleLogit:
     def __init__(self,name):
         self.name = name
@@ -52,3 +53,17 @@ class Marubozu:
             return 0
         else:
             return 0.5
+
+
+class RandomSignals:
+    def __init__(self):
+        pass
+
+    def predict(self):
+        signal = random.randrange(3)
+        if signal==2:
+            return 1
+        elif signal==1:
+            return 0.5
+        else:
+            return 0

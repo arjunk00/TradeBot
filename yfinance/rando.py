@@ -1,2 +1,3 @@
-for i in range(1,1000000):
-    print(i)
+import random
+
+print(random.randrange(3))
