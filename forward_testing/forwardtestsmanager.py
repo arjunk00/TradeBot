@@ -79,5 +79,6 @@ class ForwardTestManager:
                 print(timeslot_biases+start_timestamp, current_timestamp)        
                 self.run_slot(self.slots[slot_index[0][0]])
 
-m = ForwardTestManager(1, 5, ["DRREDDY", "ADANIPORTS", "HINDUNILVR", "AXISBANK","INFY", "BAJFINANCE", "TATAMOTORS"])
+# m = ForwardTestManager(1, 5, ["DRREDDY", "ADANIPORTS", "HINDUNILVR", "AXISBANK","INFY", "BAJFINANCE", "TATAMOTORS"])
+m = ForwardTestManager(1,5,["BAJFINANCE"])
 m.start()
