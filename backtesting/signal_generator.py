@@ -166,3 +166,23 @@ class SignalGenMarubozu:
         signalcsvfile.close()
         testfile.close()
 
+
+class ParameterGen:
+    def __init__(self, stock_code):
+        super().__init__()
+        # self.duration = duration
+        self.stock_code = stock_code
+
+    def run(self):
+        
+        signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/output/signals/{self.stock_code}{__class__.__name__}.csv","w",newline='')
+        csvwriter = csv.writer(signalcsvfile)
+        testfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/{self.stock_code}__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
+        datareader = csv.reader(testfile)
+        i = 0
+        for row in datareader:
+            if i==0:
+                csvwriter.writerow(row)
+                i+=1
+            else:
+                

@@ -1,6 +1,9 @@
 from sklearn.linear_model import LogisticRegression, LinearRegression
 import numpy as np
-from tools.stockfunctions import marubozu
+import sympy as sy
+
+
+# from tools.stockfunctions import marubozu
 class DoubleLogit:
     def __init__(self,name):
         self.name = name
@@ -52,3 +55,27 @@ class Marubozu:
             return 0
         else:
             return 0.5
+
+class Baysian:
+    def __init__(self,stock_code,f,pi):
+        self.stock_code = stock_code
+        self.f = f #f(x_samp,theta)
+        self.pi = pi #pi(theta)
+    
+    def m(self,x_samp):
+        theta = sy.Symbol("theta")
+        return sy.integrate(self.f(x_samp,theta)*self.pi(theta),(theta,0,1))
+
+    def pi_x(self,theta,x_samp):
+        return self.f(x_samp,theta)*self.pi(theta)/self.m(x_samp)
+
+
+def f(x,theta):
+    return (x/theta)**2
+
+def pi(theta):
+    return -theta
+        
+bay = Baysian('ad',f,pi)
+
+print(bay.pi_x(1,1))
