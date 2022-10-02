@@ -57,17 +57,26 @@ class Marubozu:
             return 0.5
 
 class Baysian:
-    def __init__(self,stock_code,f,pi):
+    def __init__(self,stock_code,f,pi,thetarange):
         self.stock_code = stock_code
         self.f = f #f(x_samp,theta)
         self.pi = pi #pi(theta)
+        self.thetarange = thetarange
     
     def m(self,x_samp):
         theta = sy.Symbol("theta")
-        return sy.integrate(self.f(x_samp,theta)*self.pi(theta),(theta,0,1))
+        return sy.integrate(self.f(x_samp,theta)*self.pi(theta),(theta,self.thetarange[0],self.thetarange[1]))
 
     def pi_x(self,theta,x_samp):
         return self.f(x_samp,theta)*self.pi(theta)/self.m(x_samp)
+    
+    def Etheta_pi_x(self,x_samp):
+        thetadiscrete = np.linspace(self.thetarange[0],self.thetarange[1],int((self.thetarange[1]-self.thetarange[0])/0.1))
+        E = 0
+        for theta in thetadiscrete:
+            E += theta*self.pi_x(theta,x_samp)
+        return E
+
 
 
 def f(x,theta):
@@ -76,6 +85,6 @@ def f(x,theta):
 def pi(theta):
     return -theta
         
-bay = Baysian('ad',f,pi)
+bay = Baysian('ad',f,pi,[0.5,1])
 
-print(bay.pi_x(1,1))
+print(bay.Etheta_pi_x(1))
