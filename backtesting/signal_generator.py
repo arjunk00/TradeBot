@@ -5,7 +5,7 @@ import sys, os
 PROJECT_ROOT_DIR = f"{os.path.dirname(os.path.realpath(__file__))}/../"
 sys.path.append(PROJECT_ROOT_DIR)
 
-from tools.stockfunctions import createsignaltable, store
+from tools.stockfunctions import dtformat
 import pickle
 import datetime as dt
 import numpy as np
@@ -168,11 +168,11 @@ class SignalGenMarubozu:
 
 
 class ParameterGen:
-    def __init__(self, stock_code):
+    def __init__(self, stock_code,model,duration):
         super().__init__()
-        # self.duration = duration
+        self.duration = duration #[startdate,enddate]
         self.stock_code = stock_code
-
+        self.model = model
     def run(self):
         
         signalcsvfile = open(f"{os.path.dirname(os.path.realpath(__file__))}/output/signals/{self.stock_code}{__class__.__name__}.csv","w",newline='')
@@ -182,7 +182,34 @@ class ParameterGen:
         i = 0
         for row in datareader:
             if i==0:
-                csvwriter.writerow(row)
+                csvwriter.writerow(row.append('params'))
                 i+=1
+            elif dt.datetime.strptime(row[0],dtformat).date() < self.duration[0] or self.duration[1] < dt.datetime.strptime(row[0],dtformat).date():
+                continue
             else:
+                prices_and_volume = row[1:6]
+            # print(prices_and_volume)
+                prices_and_volume = [float(x) for x in prices_and_volume]
+
+                print(prices_and_volume)
+
+                if prices_and_volume is None:
+                    pass
+
+                prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
+                params = self.model.estparams(prices_and_volume_arr)
+                row = [
+                    row[0][0:10],
+                    row[0][11:19],
+                    prices_and_volume[0],
+                    prices_and_volume[1],
+                    prices_and_volume[2],
+                    prices_and_volume[3],
+                    params
+                    ]
                 
+                csvwriter.writerow(row)
+            print(self.stock_code, row)
+        signalcsvfile.close()
+        testfile.close()
+

@@ -9,7 +9,7 @@ import pandas as pd
 import psycopg2
 
 nse = Nse()
-
+dtformat = '%Y-%m-%d %H:%M:%S%z'
 
 def fallbuy(stock_code):
     data = get_history(symbol=stock_code, start=date(2019, 1, 1), end=date(2020, 1, 1))['Close']

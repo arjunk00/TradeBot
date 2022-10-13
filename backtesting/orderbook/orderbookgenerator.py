@@ -93,6 +93,34 @@ class DollarCostAvg:
             pass
 
 
+class OrderBookParam:
+    def __init__(self,stock_code,model):
+        self.stock_code = stock_code
+        self.model = model
+        self.infile = open(f'{os.path.dirname(os.path.realpath(__file__))}/../output/signals/{self.stock_code}{model.__class__.__name__}.csv','r')
+        self.outfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/../output/orderbooks/{self.stock_code}{model.__class__.__name__}.csv','w',newline='')
+        self.csvreader = csv.reader(self.infile)
+        self.engine = TradeEngine(stock_code,100000,self.outfile)
+
+    def run(self):
+        engine = self.engine
+        for row in self.csvreader:
+            params = [float(x) for x in row[6]]
+            expected_profit = E[(p-row[5]-brokerage)*self.model.f(p,params)]
+            lastdate = engine.current_datetime.date()
+            engine.setdatetime(row[0],row[1])
+            curdate = engine.current_datetime.date()
+            if engine.current_datetime.time() >= dt.time(15,15):
+                engine.posexit(float(row[-2]))
+                continue
+            if lastdate != curdate:
+                engine.daychange()
+            
+            if expected_profit>0:
+                pass
+            
+            
+
 
 
 # order = OrderBook('ADANIPORTS')

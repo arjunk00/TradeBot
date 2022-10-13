@@ -59,7 +59,7 @@ class Marubozu:
 class Baysian:
     def __init__(self,stock_code,f,pi,thetarange):
         self.stock_code = stock_code
-        self.f = f #f(x_samp,theta)
+        self.f = f #f(x_samp,theta) = f(x_samp|theta)
         self.pi = pi #pi(theta)
         self.thetarange = thetarange
     
@@ -76,7 +76,9 @@ class Baysian:
         for theta in thetadiscrete:
             E += theta*self.pi_x(theta,x_samp)
         return E
-
+    
+    def estparams(self,x_samp):
+        return [self.Etheta_pi_x(x_samp)]
 
 
 def f(x,theta):
