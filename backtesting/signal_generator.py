@@ -42,7 +42,7 @@ class SignalGenLinReg:
             "ASIANPAINT": 0.3757896383910965
         }
 
-        # prices_and_volume = getPricesandVolume(self.stock_code, self.duration)
+        # prices = getPricesandVolume(self.stock_code, self.duration)
 
         testfile = open(f'{os.path.dirname(os.path.realpath(__file__))}/{self.stock_code}__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
         datareader = csv.reader(testfile)
@@ -53,28 +53,28 @@ class SignalGenLinReg:
             # i+=1
             # if(i==24650):
             #     break
-            prices_and_volume = row[1:6]
-            # print(prices_and_volume)
-            prices_and_volume = [float(x) for x in prices_and_volume]
+            prices = row[1:6]
+            # print(prices)
+            prices = [float(x) for x in prices]
 
-            print(prices_and_volume)
+            print(prices)
 
-            if prices_and_volume is None:
+            if prices is None:
                 pass
 
-            prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
-            # prices_and_volume_arr = prices_and_volume_arr.astype(np.float64)
+            prices_arr = np.array(prices, ndmin=2)
+            # prices_arr = prices_arr.astype(np.float64)
             logregobj = log_reg_obj(self.stock_code)
 
-            up_prob = logregobj.predict(prices_and_volume_arr)[0]
+            up_prob = logregobj.predict(prices_arr)[0]
 
             row = [
                 row[0][0:10],
                 row[0][11:19],
-                prices_and_volume[0],
-                prices_and_volume[1],
-                prices_and_volume[2],
-                prices_and_volume[3],
+                prices[0],
+                prices[1],
+                prices[2],
+                prices[3],
                 up_prob
             ]
 
@@ -111,28 +111,28 @@ class SignalGenMarubozu:
             "ASIANPAINT": 0.3757896383910965
         }
 
-        # prices_and_volume = getPricesandVolume(self.stock_code, self.duration)
+        # prices = getPricesandVolume(self.stock_code, self.duration)
 
         testfile =  open(f'{os.path.dirname(os.path.realpath(__file__))}/ADANIPORTS__EQ__NSE__NSE__5MINUTE_CONVERGED.csv', 'r')
         datareader = csv.reader(testfile)
         for i in range(24650): next(datareader)
         for row in datareader:
-            prices_and_volume = row[1:]
-            # print(prices_and_volume)
-            prices_and_volume = [float(x) for x in prices_and_volume]
+            prices = row[1:]
+            # print(prices)
+            prices = [float(x) for x in prices]
 
-            print(prices_and_volume)
+            print(prices)
 
-            if prices_and_volume is None:
+            if prices is None:
                 pass
 
-            prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
-            # prices_and_volume_arr = prices_and_volume_arr.astype(np.float64)
+            prices_arr = np.array(prices, ndmin=2)
+            # prices_arr = prices_arr.astype(np.float64)
             # linregobj = regobj(self.stock_code)
             marubozuobj = Marubozu(self.stock_code)
-            # up_prob = linregobj.predict_proba(prices_and_volume_arr)[0][1]
-            # up_prob = linregobj.predict(prices_and_volume_arr)[0][0]
-            up_prob = marubozuobj.predict(prices_and_volume_arr[0])
+            # up_prob = linregobj.predict_proba(prices_arr)[0][1]
+            # up_prob = linregobj.predict(prices_arr)[0][0]
+            up_prob = marubozuobj.predict(prices_arr[0])
 
             if up_prob > 0.5:
                 print("B")
@@ -150,12 +150,12 @@ class SignalGenMarubozu:
             row = [
                 str(date_time)[0:10],
                 str(date_time)[11:19],
-                prices_and_volume[0],
-                prices_and_volume[1],
-                prices_and_volume[2],
-                prices_and_volume[3],
+                prices[0],
+                prices[1],
+                prices[2],
+                prices[3],
                 signal,
-                prices_and_volume[3],
+                prices[3],
                 up_prob
             ]
 
@@ -170,7 +170,10 @@ class SignalGenMarubozu:
 class ParameterGen:
     def __init__(self, stock_code,model,duration):
         super().__init__()
-        self.duration = duration #[startdate,enddate]
+        if duration == []:
+            self.duration = [dt.date(year=2018,month=5,day=3),dt.date(year=2021,month=1,day=1)]
+        else:
+            self.duration = duration
         self.stock_code = stock_code
         self.model = model
     def run(self):
@@ -182,29 +185,30 @@ class ParameterGen:
         i = 0
         for row in datareader:
             if i==0:
-                csvwriter.writerow(row.append('params'))
+                row.append('params')
+                csvwriter.writerow(row)
                 i+=1
             elif dt.datetime.strptime(row[0],dtformat).date() < self.duration[0] or self.duration[1] < dt.datetime.strptime(row[0],dtformat).date():
                 continue
             else:
-                prices_and_volume = row[1:6]
-            # print(prices_and_volume)
-                prices_and_volume = [float(x) for x in prices_and_volume]
+                prices = row[1:5]
+            # print(prices)
+                prices = [float(x) for x in prices]
 
-                print(prices_and_volume)
+                print(prices)
 
-                if prices_and_volume is None:
+                if prices is None:
                     pass
 
-                prices_and_volume_arr = np.array(prices_and_volume, ndmin=2)
-                params = self.model.estparams(prices_and_volume_arr)
+                prices_arr = np.array(prices, ndmin=2)
+                params = self.model.estparams(prices_arr) #list
                 row = [
                     row[0][0:10],
                     row[0][11:19],
-                    prices_and_volume[0],
-                    prices_and_volume[1],
-                    prices_and_volume[2],
-                    prices_and_volume[3],
+                    prices[0],
+                    prices[1],
+                    prices[2],
+                    prices[3],
                     params
                     ]
                 

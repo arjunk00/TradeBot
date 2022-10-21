@@ -7,7 +7,10 @@ def log_reg_obj(stock_code):
   log_reg_obj = pickle.load(open(f'{os.path.dirname(os.path.realpath(__file__))}/pickles/DOUBLELOGIT_5MIN_TRAINED_{stock_code}.pickle','rb'))
   return log_reg_obj
 
-
+def linregnewobj(stock_code):
+  linregnew = pickle.load(open(f'{os.path.dirname(os.path.realpath(__file__))}/pickles/LINREGNEW_5MIN_TRAINED_{stock_code}.pickle','rb'))
+  return linregnew
+  
 def regobj(stock_code):
   linregobj = pickle.load(open(f'{os.path.dirname(os.path.realpath(__file__))}/pickles/linear_regression_{stock_code}_new.pickle','rb'))
   return linregobj

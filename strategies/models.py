@@ -81,12 +81,24 @@ class Baysian:
         return [self.Etheta_pi_x(x_samp)]
 
 
-def f(x,theta):
-    return (x/theta)**2
+# def f(x,theta):
+#     return (x/theta)**2
 
-def pi(theta):
-    return -theta
+# def pi(theta):
+#     return -theta
         
-bay = Baysian('ad',f,pi,[0.5,1])
+# bay = Baysian('ad',f,pi,[0.5,1])
 
-print(bay.Etheta_pi_x(1))
+# print(bay.Etheta_pi_x(1))
+
+class LinearReg:
+    def __init__(self, stock_code):
+        self.stock_code = stock_code
+        self.lr = LinearRegression()
+
+    def train(self, X, y):
+        self.lr.fit(X, y)
+        print("training complete")
+
+    def estparams(self, X):
+        return self.lr.predict(X)
