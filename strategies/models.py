@@ -1,6 +1,8 @@
 from sklearn.linear_model import LogisticRegression, LinearRegression
 import numpy as np
 from tools.stockfunctions import marubozu
+import datetime as dt
+
 class DoubleLogit:
     def __init__(self,name):
         self.name = name
@@ -52,3 +54,58 @@ class Marubozu:
             return 0
         else:
             return 0.5
+
+class DipDetect:
+    def __init__(self, dip_percent: float, price_history: list, current_datetime: dt.datetime):
+        '''price_history: list of pairs of datetime and price [(datetime1,price1),....]
+        '''
+        self.dip_percent = dip_percent
+        self.price_history = price_history
+        self.current_datetime = current_datetime
+        self.last_month_avg = 0
+        self.n = 0
+
+    def calc_last_month_avg(self):
+        one_month = dt.timedelta(weeks=4)
+        start_date = self.current_datetime - one_month
+        last_month_avg = 0
+        n = 0
+        for date_time, price in self.price_history:
+            if date_time >= start_date:
+                n += 1
+                last_month_avg += price
+        last_month_avg /= n
+        self.last_month_avg = last_month_avg
+        self.n = n
+    
+    def update_last_month_avg(self,newest_removed_price, current_price):
+        '''Only to be called if monthly avg has been calculated correctly once'''
+        self.last_month_avg += (current_price-newest_removed_price)/self.n
+
+    def update_new_price(self, price, new_datetime):
+        self.price_history.append((new_datetime,price))
+        self.current_datetime = new_datetime
+        one_month = dt.timedelta(weeks=4)
+        if self.price_history[0][0] = self.current_datetime - one_month:
+            self.calc_last_month_avg()
+        elif self.price_history[0][0] > self.current_datetime - one_month:
+            l = len(self.price_history)
+            newest_removed_price = self.price_history[l-n-1]
+            del self.price_history[:l-n]
+            self.update_last_month_avg(newest_removed_price,current_price)
+        else:
+            pass
+
+
+
+    def predict(self,current_price):
+        change =  (current_price - self.last_month_avg)/self.last_month_avg
+        if change <= self.dip_percent:
+            return "B"
+        elif change >= -self.dip_percent:
+            return "S"
+        else:
+            return "H"
+
+
+
