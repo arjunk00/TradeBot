@@ -81,7 +81,10 @@ class TradeEngine:
         self.blockedmargin -= self.blockedmargin*(qty/max_qty)
         self.qty -= qty
         if PL > 0:
-            self.margin[self.current_datetime.date()] += PL
+            if self.current_datetime.date() in self.margin.keys():
+                self.margin[self.current_datetime.date()] += PL
+            else:
+                self.margin[self.current_datetime.date()] = PL
         else:
             self.funds += PL
         
@@ -145,10 +148,12 @@ class TradeEngine:
     
     def daychange(self):
         # print(brokerage_deductions(self.daytradesdataframe)['deduction'])
+        self.current_datetime += timedelta(days=1)
         self.funds += list(self.margin.values())[0] - brokerage_deductions(self.daytradesdataframe)['deduction']
         del self.margin[list(self.margin.keys())[0]]
         self.margin[self.current_datetime.date()] = 0
         self.daytradesdataframe = pd.DataFrame({'symbol':[],'datetime':[],'order':[],'quantity':[],'price':[]})
+
     
     def setdatetime(self,date,time):
         date_time = date+time
